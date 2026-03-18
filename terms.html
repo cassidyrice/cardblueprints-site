@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms &amp; Conditions — Card Blueprints</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #050505;
+      color: #f4f4f4;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: #5b7cfa; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #c084fc; }
+
+    header {
+      padding: 48px 24px 32px;
+      text-align: center;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    header .site-name {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    header .site-name a { color: #888; }
+    header .site-name a:hover { color: #c084fc; text-decoration: none; }
+
+    header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #c084fc 0%, #5b7cfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    header .effective {
+      font-size: 13px;
+      color: #666;
+    }
+
+    main {
+      flex: 1;
+      max-width: 680px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+
+    .intro {
+      background: #111;
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+      border: 1px solid #1e1e1e;
+      color: #bbb;
+      font-size: 15px;
+    }
+
+    section {
+      margin-bottom: 36px;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #c084fc;
+      margin-bottom: 12px;
+      letter-spacing: 0.01em;
+    }
+
+    p {
+      color: #ccc;
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 12px;
+    }
+
+    ul li {
+      color: #ccc;
+      font-size: 15px;
+      padding: 5px 0 5px 20px;
+      position: relative;
+    }
+
+    ul li::before {
+      content: "–";
+      position: absolute;
+      left: 0;
+      color: #5b7cfa;
+    }
+
+    .card {
+      background: #111;
+      border-radius: 16px;
+      padding: 24px 28px;
+      border: 1px solid #1e1e1e;
+      margin-top: 8px;
+    }
+
+    .highlight-card {
+      background: #0d1020;
+      border-radius: 16px;
+      padding: 24px 28px;
+      border: 1px solid #1e2a4a;
+      margin-top: 8px;
+    }
+
+    .disclaimer {
+      background: #0e0c14;
+      border-radius: 16px;
+      padding: 24px 28px;
+      border: 1px solid #2a1e3a;
+      margin-top: 8px;
+    }
+
+    .disclaimer p {
+      color: #b899e0;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .disclaimer p:last-child { margin-bottom: 0; }
+
+    .service-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5b7cfa;
+      background: #0d1020;
+      border: 1px solid #1e2a4a;
+      border-radius: 6px;
+      padding: 2px 8px;
+      margin-bottom: 10px;
+    }
+
+    .contact-link {
+      display: inline-block;
+      margin-top: 4px;
+      color: #5b7cfa;
+      font-size: 15px;
+    }
+
+    footer {
+      background: #0a0a0a;
+      border-top: 1px solid #1a1a1a;
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: #666;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-links a:hover { color: #c084fc; text-decoration: none; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="site-name"><a href="/">Card Blueprints</a></div>
+    <h1>Terms &amp; Conditions</h1>
+    <p class="effective">Effective date: March 18, 2026</p>
+  </header>
+
+  <main>
+    <div class="intro">
+      By using cardblueprints.com or purchasing any product or service, you agree to these terms. Please read them carefully. If you have questions, we're easy to reach.
+    </div>
+
+    <section>
+      <h2>Services Offered</h2>
+      <div class="card">
+        <ul>
+          <li><strong>Free email course</strong> — A multi-lesson introduction to cardology delivered by email. No purchase required.</li>
+          <li><strong>Digital Signal Pack ($9)</strong> — A downloadable digital product providing cardology reference materials for personal use.</li>
+          <li><strong>Personal Video Reading ($99)</strong> — A custom-recorded cardology reading based on your submitted question and date.</li>
+          <li><strong>Paid courses (upcoming)</strong> — Structured learning programs offered at announced pricing when available.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Digital Products</h2>
+      <div class="card">
+        <p>All digital products (including the Signal Pack and any future downloadable materials) are delivered electronically via email download link.</p>
+        <p>Digital products are licensed for <strong>personal use only</strong>. You may not redistribute, resell, share, or reproduce any content from these products without express written permission from Card Blueprints.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Personal Video Readings ($99)</h2>
+      <div class="highlight-card">
+        <div class="service-tag">Reading Service</div>
+        <p>Upon purchase, you submit one specific question and a date you would like explored. A personally recorded video reading (approximately 10–15 minutes) will be delivered to your email address within <strong>7 business days</strong>.</p>
+        <p>Video readings are provided for <strong>entertainment and self-reflection purposes only</strong>. They do not constitute financial, medical, legal, or psychological advice of any kind. No outcomes are guaranteed. By purchasing a reading, you acknowledge and accept this limitation.</p>
+        <p>Please see our <a href="/refund.html">Refund Policy</a> for cancellation terms specific to readings.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Intellectual Property</h2>
+      <div class="card">
+        <p>All content on cardblueprints.com — including but not limited to written materials, course lessons, videos, graphics, system designs, and reading methodologies — is the intellectual property of Card Blueprints and is protected by copyright.</p>
+        <p>Nothing on this site may be copied, reproduced, or distributed without explicit written consent.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Disclaimer</h2>
+      <div class="disclaimer">
+        <p>Cardology is an ancient symbolic system rooted in the mathematical structure of the standard playing card deck. It is used as a tool for self-reflection and personal insight — not prediction or guarantee.</p>
+        <p>All content, readings, and course materials on this site are intended purely for educational and entertainment purposes. Results are not guaranteed. Card Blueprints is not responsible for decisions made based on any content, reading, or material provided through this site.</p>
+        <p>Nothing here is a substitute for professional medical, psychological, financial, or legal advice. Please consult a qualified professional for such matters.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Governing Law</h2>
+      <div class="card">
+        <p>These terms are governed by the laws of your local jurisdiction. Any disputes arising from use of cardblueprints.com or its products and services will be resolved under applicable local law.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Changes to These Terms</h2>
+      <div class="card">
+        <p>We may update these terms from time to time. The effective date at the top of this page reflects the most recent revision. Continued use of the site after any update constitutes acceptance of the revised terms.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <div class="card">
+        <p>Questions about these terms? Reach out directly:</p>
+        <a class="contact-link" href="mailto:therealcassrice@gmail.com">therealcassrice@gmail.com</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <nav class="footer-links">
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms &amp; Conditions</a>
+      <a href="/refund.html">Refund Policy</a>
+    </nav>
+    <p class="footer-copy">&copy; 2026 Card Blueprints. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

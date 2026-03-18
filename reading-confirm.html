@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Reading Booked • Card Blueprints</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <style>
+    body { font-family: system-ui,-apple-system,BlinkMacSystemFont,sans-serif; background:#050505; color:#f4f4f4; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; padding:20px; }
+    .card { max-width:540px; width:100%; background:#111; border-radius:16px; padding:48px 40px; text-align:center; }
+    h1 { color:#c084fc; font-size:1.8rem; margin-bottom:12px; }
+    p { color:#c0b8d0; line-height:1.7; margin-bottom:1rem; }
+    .detail { background:#1a1230; border-radius:10px; padding:16px 20px; margin:20px 0; text-align:left; font-size:0.9rem; }
+    .detail span { color:#6b5a8a; display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:2px; }
+    .detail p { margin:0 0 12px; color:#e0d9f0; }
+    .detail p:last-child { margin:0; }
+    a { color:#5b7cfa; }
+    footer { margin-top:32px; font-size:0.8rem; color:#4a3a6a; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div style="font-size:3rem;margin-bottom:16px">🃏</div>
+    <h1>Your reading is booked</h1>
+    <p>Thank you. I'll record your personal cardology reading and deliver it to your inbox within <strong>7 business days</strong>.</p>
+    <div class="detail" id="details"></div>
+    <p style="font-size:0.85rem;color:#6b5a8a;">Questions? Email <a href="mailto:therealcassrice@gmail.com">therealcassrice@gmail.com</a></p>
+    <a href="/">← Back to Card Blueprints</a>
+    <footer><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/refund.html">Refunds</a></footer>
+  </div>
+  <script>
+    const data = JSON.parse(sessionStorage.getItem('reading_data') || '{}');
+    const el = document.getElementById('details');
+    if (data.name) {
+      el.innerHTML = `
+        <span>Name</span><p>${data.name}</p>
+        <span>Email</span><p>${data.email}</p>
+        <span>Birthday</span><p>${data.birth_month}/${data.birth_day}/${data.birth_year}</p>
+        <span>Date to read</span><p>${data.read_month}/${data.read_day}/${data.read_year}</p>
+        <span>Your question</span><p>${data.question}</p>`;
+    } else {
+      el.innerHTML = '<p>Check your email for confirmation details.</p>';
+    }
+    sessionStorage.removeItem('reading_data');
+  </script>
+</body>
+</html>

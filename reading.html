@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Card Reading — Card Blueprints</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #050505;
+      color: #f4f4f4;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: #5b7cfa; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #c084fc; }
+
+    /* ── HEADER ── */
+    .site-header {
+      padding: 24px;
+      text-align: center;
+      border-bottom: 1px solid #111;
+    }
+
+    .site-name {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #666;
+    }
+
+    .site-name a { color: #666; }
+    .site-name a:hover { color: #c084fc; text-decoration: none; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 72px 24px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse at center, rgba(91, 124, 250, 0.08) 0%, rgba(192, 132, 252, 0.05) 50%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #c084fc;
+      background: rgba(192, 132, 252, 0.08);
+      border: 1px solid rgba(192, 132, 252, 0.2);
+      border-radius: 100px;
+      padding: 4px 14px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5.5vw, 50px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      max-width: 640px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, #f4f4f4 0%, #c084fc 60%, #5b7cfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: #999;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ── WHAT YOU GET ── */
+    .what-you-get {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px 56px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #5b7cfa;
+      margin-bottom: 20px;
+    }
+
+    .benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+
+    .benefit {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: #111;
+      border-radius: 14px;
+      padding: 20px 22px;
+      border: 1px solid #1a1a1a;
+    }
+
+    .benefit-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, rgba(91,124,250,0.15), rgba(192,132,252,0.15));
+      border: 1px solid rgba(192,132,252,0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .benefit-text {
+      font-size: 15px;
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .benefit-text strong { color: #f4f4f4; }
+
+    /* ── PRICE BADGE ── */
+    .price-section {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      text-align: center;
+    }
+
+    .price-badge {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      background: linear-gradient(135deg, rgba(91,124,250,0.12), rgba(192,132,252,0.12));
+      border: 1px solid rgba(192,132,252,0.25);
+      border-radius: 100px;
+      padding: 10px 28px;
+    }
+
+    .price-amount {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #5b7cfa, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .price-label {
+      font-size: 15px;
+      color: #888;
+    }
+
+    /* ── FORM ── */
+    .form-section {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .form-card {
+      background: #111;
+      border-radius: 20px;
+      padding: 40px;
+      border: 1px solid #1e1e1e;
+    }
+
+    .form-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f4f4f4;
+      margin-bottom: 6px;
+    }
+
+    .form-subtitle {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 32px;
+    }
+
+    .field-group {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: #aaa;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field-row-3 {
+      display: grid;
+      grid-template-columns: 2fr 2fr 3fr;
+      gap: 10px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      background: #0a0a0a;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      color: #f4f4f4;
+      font-family: inherit;
+      font-size: 15px;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #5b7cfa;
+      box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.12);
+    }
+
+    input::placeholder,
+    textarea::placeholder { color: #444; }
+
+    textarea { resize: vertical; min-height: 90px; }
+
+    .date-hint {
+      font-size: 12px;
+      color: #555;
+      margin-top: 6px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #1e1e1e;
+      margin: 28px 0;
+    }
+
+    /* ── SUBMIT ── */
+    .submit-area {
+      text-align: center;
+    }
+
+    button.cta {
+      display: inline-block;
+      width: 100%;
+      background: linear-gradient(135deg, #5b7cfa 0%, #7c5bfa 50%, #c084fc 100%);
+      color: #fff;
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      border: none;
+      border-radius: 12px;
+      padding: 16px 32px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      position: relative;
+    }
+
+    button.cta:hover { opacity: 0.9; transform: translateY(-1px); }
+    button.cta:active { transform: translateY(0); }
+    button.cta:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .cta-note {
+      font-size: 13px;
+      color: #666;
+      margin-top: 12px;
+    }
+
+    .cta-note svg {
+      width: 12px;
+      height: 12px;
+      vertical-align: -1px;
+      margin-right: 4px;
+    }
+
+    .privacy-note {
+      font-size: 13px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .error-msg {
+      display: none;
+      background: #1a0d0d;
+      border: 1px solid #3a1a1a;
+      border-radius: 10px;
+      color: #f87171;
+      font-size: 14px;
+      padding: 12px 16px;
+      margin-top: 14px;
+      text-align: left;
+    }
+
+    .error-msg.visible { display: block; }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .trust-item span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #5b7cfa;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0a0a0a;
+      border-top: 1px solid #1a1a1a;
+      padding: 28px 24px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: #666;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-links a:hover { color: #c084fc; text-decoration: none; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: #444;
+    }
+
+    @media (max-width: 520px) {
+      .form-card { padding: 28px 20px; }
+      .field-row-3 { grid-template-columns: 1fr 1fr; }
+      .field-row-3 .year-field { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-name"><a href="/">Card Blueprints</a></div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Personal Reading</div>
+    <h1>Your Personal Card Reading — One Question, Answered on Video</h1>
+    <p class="hero-sub">Submit your question and the date you want explored. I'll record a personal cardology reading just for you and deliver it within 7 business days.</p>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="what-you-get">
+    <p class="section-label">What's included</p>
+    <div class="benefits">
+      <div class="benefit">
+        <div class="benefit-icon">&#9654;</div>
+        <div class="benefit-text">
+          <strong>A personally recorded video reading (10–15 min)</strong> answering your specific question — created just for you, not a template.
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">&#9830;</div>
+        <div class="benefit-text">
+          <strong>Full breakdown of the cards active on your chosen date</strong> — planetary periods, Pluto card, Result card, and more decoded in plain language.
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">&#9993;</div>
+        <div class="benefit-text">
+          <strong>Delivered to your inbox within 7 business days.</strong> You'll receive a direct link to your video as soon as it's ready.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICE -->
+  <div class="price-section">
+    <div class="price-badge">
+      <span class="price-amount">$99</span>
+      <span class="price-label">one-time &middot; personal reading</span>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <section class="form-section">
+    <div class="form-card">
+      <h2 class="form-title">Book Your Reading</h2>
+      <p class="form-subtitle">All fields are required. Your information is kept private and used only to fulfill your reading.</p>
+
+      <form id="reading-form" novalidate>
+
+        <div class="field-group">
+          <label for="r-name">Full Name</label>
+          <input type="text" id="r-name" name="name" placeholder="Your full name" autocomplete="name" />
+        </div>
+
+        <div class="field-group">
+          <label for="r-email">Email Address</label>
+          <input type="email" id="r-email" name="email" placeholder="where we'll send your video" autocomplete="email" />
+        </div>
+
+        <hr class="divider" />
+
+        <div class="field-group">
+          <label>Your Birthday</label>
+          <div class="field-row-3">
+            <select id="r-birth-month" name="birth_month" aria-label="Birth month">
+              <option value="" disabled selected>Month</option>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+            <select id="r-birth-day" name="birth_day" aria-label="Birth day">
+              <option value="" disabled selected>Day</option>
+              <!-- populated by JS -->
+            </select>
+            <input type="text" id="r-birth-year" name="birth_year" placeholder="Year (e.g. 1990)" maxlength="4" inputmode="numeric" class="year-field" />
+          </div>
+          <p class="date-hint">Used to calculate your cardology positions.</p>
+        </div>
+
+        <div class="field-group">
+          <label>Which date would you like me to read for you?</label>
+          <div class="field-row-3">
+            <select id="r-read-month" name="read_month" aria-label="Reading month">
+              <option value="" disabled selected>Month</option>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+            <select id="r-read-day" name="read_day" aria-label="Reading day">
+              <option value="" disabled selected>Day</option>
+            </select>
+            <input type="text" id="r-read-year" name="read_year" placeholder="Year (e.g. 2026)" maxlength="4" inputmode="numeric" class="year-field" />
+          </div>
+          <p class="date-hint">This is the date whose energy you'd like explored.</p>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="field-group">
+          <label for="r-question">Your Question</label>
+          <textarea
+            id="r-question"
+            name="question"
+            rows="3"
+            placeholder="What would you like to understand about this date in your life?"
+          ></textarea>
+          <p class="date-hint">Be as specific or as open-ended as feels right.</p>
+        </div>
+
+        <div class="submit-area">
+          <button type="submit" id="reading-btn" class="cta">Book My Reading &mdash; $99</button>
+          <p class="cta-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Secure payment via Stripe. You'll receive a confirmation email after checkout.
+          </p>
+          <p class="privacy-note">Your information is never shared. Readings are for entertainment and self-reflection.</p>
+          <div class="error-msg" id="error-msg" role="alert"></div>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-item"><span class="dot"></span> Personally recorded for you</div>
+    <div class="trust-item"><span class="dot"></span> Delivered within 7 business days</div>
+    <div class="trust-item"><span class="dot"></span> Secure checkout via Stripe</div>
+    <div class="trust-item"><span class="dot"></span> Private &amp; confidential</div>
+  </div>
+
+  <footer>
+    <nav class="footer-links">
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms &amp; Conditions</a>
+      <a href="/refund.html">Refund Policy</a>
+    </nav>
+    <p class="footer-copy">&copy; 2026 Card Blueprints. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // ── Populate day selects ──
+    function populateDays(selectEl, count) {
+      selectEl.innerHTML = '<option value="" disabled selected>Day</option>';
+      for (let d = 1; d <= count; d++) {
+        const opt = document.createElement('option');
+        opt.value = d;
+        opt.textContent = d;
+        selectEl.appendChild(opt);
+      }
+    }
+
+    const birthDay = document.getElementById('r-birth-day');
+    const readDay  = document.getElementById('r-read-day');
+
+    populateDays(birthDay, 31);
+    populateDays(readDay, 31);
+
+    // Adjust days when month changes
+    function daysInMonth(month, year) {
+      if (!month) return 31;
+      const y = parseInt(year) || 2000;
+      return new Date(y, month, 0).getDate();
+    }
+
+    document.getElementById('r-birth-month').addEventListener('change', function () {
+      const yr = document.getElementById('r-birth-year').value;
+      populateDays(birthDay, daysInMonth(this.value, yr));
+    });
+
+    document.getElementById('r-birth-year').addEventListener('change', function () {
+      const mo = document.getElementById('r-birth-month').value;
+      populateDays(birthDay, daysInMonth(mo, this.value));
+    });
+
+    document.getElementById('r-read-month').addEventListener('change', function () {
+      const yr = document.getElementById('r-read-year').value;
+      populateDays(readDay, daysInMonth(this.value, yr));
+    });
+
+    document.getElementById('r-read-year').addEventListener('change', function () {
+      const mo = document.getElementById('r-read-month').value;
+      populateDays(readDay, daysInMonth(mo, this.value));
+    });
+
+    // ── Form submission ──
+    const STRIPE_KEY = 'pk_live_51SyNONDgoKThmC0IJfBVvvSMIKYPg3RIGot4NMG1HtNJal6inRtIfHg38MNW7HoHecIl0ZOMS6zrg55aeuFxudVt00OEBDLtFV';
+    const stripe = Stripe(STRIPE_KEY);
+
+    const form    = document.getElementById('reading-form');
+    const btn     = document.getElementById('reading-btn');
+    const errMsg  = document.getElementById('error-msg');
+
+    function showError(msg) {
+      errMsg.textContent = msg;
+      errMsg.classList.add('visible');
+      btn.disabled = false;
+      btn.textContent = 'Book My Reading — $99';
+    }
+
+    function hideError() {
+      errMsg.textContent = '';
+      errMsg.classList.remove('visible');
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      hideError();
+
+      const fields = {
+        name:        document.getElementById('r-name').value.trim(),
+        email:       document.getElementById('r-email').value.trim(),
+        birth_month: document.getElementById('r-birth-month').value,
+        birth_day:   document.getElementById('r-birth-day').value,
+        birth_year:  document.getElementById('r-birth-year').value.trim(),
+        read_month:  document.getElementById('r-read-month').value,
+        read_day:    document.getElementById('r-read-day').value,
+        read_year:   document.getElementById('r-read-year').value.trim(),
+        question:    document.getElementById('r-question').value.trim(),
+      };
+
+      // Validate
+      if (!fields.name)        return showError('Please enter your full name.');
+      if (!fields.email || !/\S+@\S+\.\S+/.test(fields.email))
+                               return showError('Please enter a valid email address.');
+      if (!fields.birth_month || !fields.birth_day || !fields.birth_year || fields.birth_year.length !== 4)
+                               return showError('Please complete your birthday (month, day, and 4-digit year).');
+      if (!fields.read_month || !fields.read_day || !fields.read_year || fields.read_year.length !== 4)
+                               return showError('Please complete the date you want read (month, day, and 4-digit year).');
+      if (!fields.question)    return showError('Please enter your question.');
+
+      // Store in sessionStorage
+      sessionStorage.setItem('reading_data', JSON.stringify(fields));
+
+      // Disable button and show loading state
+      btn.disabled = true;
+      btn.textContent = 'Redirecting to checkout…';
+
+      try {
+        const res = await fetch('api/reading-checkout.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(fields),
+        });
+
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(text || 'Server error. Please try again.');
+        }
+
+        const data = await res.json();
+
+        if (!data.id) {
+          throw new Error('Unexpected response from server. Please try again.');
+        }
+
+        await stripe.redirectToCheckout({ sessionId: data.id });
+
+      } catch (err) {
+        showError(err.message || 'Something went wrong. Please try again or email therealcassrice@gmail.com.');
+      }
+    });
+  </script>
+
+</body>
+</html>

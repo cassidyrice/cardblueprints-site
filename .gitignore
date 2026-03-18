@@ -1,0 +1,8 @@
+# Live server config — never commit real keys
+api/config.php
+
+# macOS
+.DS_Store
+
+# Logs
+*.log

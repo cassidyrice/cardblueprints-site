@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Refund Policy — Card Blueprints</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #050505;
+      color: #f4f4f4;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: #5b7cfa; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #c084fc; }
+
+    header {
+      padding: 48px 24px 32px;
+      text-align: center;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    header .site-name {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    header .site-name a { color: #888; }
+    header .site-name a:hover { color: #c084fc; text-decoration: none; }
+
+    header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #c084fc 0%, #5b7cfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    header .effective {
+      font-size: 13px;
+      color: #666;
+    }
+
+    main {
+      flex: 1;
+      max-width: 680px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+
+    .intro {
+      background: #111;
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+      border: 1px solid #1e1e1e;
+      color: #bbb;
+      font-size: 15px;
+    }
+
+    section {
+      margin-bottom: 36px;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #c084fc;
+      margin-bottom: 12px;
+      letter-spacing: 0.01em;
+    }
+
+    p {
+      color: #ccc;
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    .card {
+      background: #111;
+      border-radius: 16px;
+      padding: 24px 28px;
+      border: 1px solid #1e1e1e;
+      margin-top: 8px;
+    }
+
+    .rule {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid #1a1a1a;
+      align-items: flex-start;
+    }
+
+    .rule:last-child { border-bottom: none; padding-bottom: 0; }
+    .rule:first-child { padding-top: 0; }
+
+    .rule-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      margin-top: 2px;
+    }
+
+    .rule-icon.yes { background: #0d2010; border: 1px solid #1a4a20; color: #4ade80; }
+    .rule-icon.no  { background: #1a0d0d; border: 1px solid #3a1a1a; color: #f87171; }
+    .rule-icon.na  { background: #0d1020; border: 1px solid #1e2a4a; color: #5b7cfa; }
+
+    .rule-body {}
+    .rule-title { font-size: 14px; font-weight: 600; color: #f4f4f4; margin-bottom: 4px; }
+    .rule-desc  { font-size: 14px; color: #999; line-height: 1.6; }
+
+    .timeline-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 6px;
+      padding: 2px 8px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .badge-green { background: #0d2010; border: 1px solid #1a4a20; color: #4ade80; }
+    .badge-red   { background: #1a0d0d; border: 1px solid #3a1a1a; color: #f87171; }
+
+    .how-to {
+      background: #0d1020;
+      border-radius: 16px;
+      padding: 24px 28px;
+      border: 1px solid #1e2a4a;
+      margin-top: 8px;
+    }
+
+    .how-to p { color: #a0b4e8; font-size: 15px; }
+    .how-to a { color: #5b7cfa; }
+
+    .contact-link {
+      display: inline-block;
+      margin-top: 8px;
+      color: #5b7cfa;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    footer {
+      background: #0a0a0a;
+      border-top: 1px solid #1a1a1a;
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: #666;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-links a:hover { color: #c084fc; text-decoration: none; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="site-name"><a href="/">Card Blueprints</a></div>
+    <h1>Refund Policy</h1>
+    <p class="effective">Effective date: March 18, 2026</p>
+  </header>
+
+  <main>
+    <div class="intro">
+      We want you to feel confident in every purchase. Here's exactly how refunds work for each product — no vague language, no runaround.
+    </div>
+
+    <section>
+      <h2>Digital Signal Pack ($9)</h2>
+      <div class="card">
+        <div class="rule">
+          <div class="rule-icon no">✕</div>
+          <div class="rule-body">
+            <div class="rule-title">No refund after the download link is accessed <span class="timeline-badge badge-red">Non-refundable</span></div>
+            <div class="rule-desc">Because digital products are delivered instantly and cannot be "returned," refunds are not available once the download link has been opened or the file accessed.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-icon yes">✓</div>
+          <div class="rule-body">
+            <div class="rule-title">Full refund if you haven't accessed it yet <span class="timeline-badge badge-green">Within 48 hrs</span></div>
+            <div class="rule-desc">If you purchased the Signal Pack but have not yet opened or downloaded the file, email us within 48 hours of purchase and we'll issue a full refund — no questions asked.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Personal Video Reading ($99)</h2>
+      <div class="card">
+        <div class="rule">
+          <div class="rule-icon yes">✓</div>
+          <div class="rule-body">
+            <div class="rule-title">Full refund before recording begins <span class="timeline-badge badge-green">Within 24 hrs</span></div>
+            <div class="rule-desc">If you change your mind, reach out within 24 hours of your purchase and we will refund you in full — provided we have not yet started recording your reading.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-icon no">✕</div>
+          <div class="rule-body">
+            <div class="rule-title">No refund after video is recorded and delivered <span class="timeline-badge badge-red">Non-refundable</span></div>
+            <div class="rule-desc">Once your personal reading video has been completed and delivered to your inbox, the service has been fully rendered and no refund is available. The reading is tailored entirely to you and cannot be resold or reused.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Free Email Course</h2>
+      <div class="card">
+        <div class="rule">
+          <div class="rule-icon na">–</div>
+          <div class="rule-body">
+            <div class="rule-title">No charges — no refunds needed</div>
+            <div class="rule-desc">The email course is completely free. There is nothing to refund. You can unsubscribe at any time via the link in any email.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Paid Courses (When Available)</h2>
+      <div class="card">
+        <div class="rule">
+          <div class="rule-icon yes">✓</div>
+          <div class="rule-body">
+            <div class="rule-title">Refund within 7 days <span class="timeline-badge badge-green">7-day window</span></div>
+            <div class="rule-desc">If fewer than 3 lessons have been accessed, you may request a full refund within 7 days of purchase. After 7 days or after accessing 3 or more lessons, the purchase is final.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How to Request a Refund</h2>
+      <div class="how-to">
+        <p>Email us at the address below with your order details (name, email address used at checkout, and what you purchased). We'll review your request and respond promptly.</p>
+        <a class="contact-link" href="mailto:therealcassrice@gmail.com">therealcassrice@gmail.com</a>
+        <p style="margin-top: 16px; font-size: 14px; color: #7a8fbf;">Approved refunds are processed within <strong>5–10 business days</strong> and returned via your original payment method through Stripe.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <nav class="footer-links">
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms &amp; Conditions</a>
+      <a href="/refund.html">Refund Policy</a>
+    </nav>
+    <p class="footer-copy">&copy; 2026 Card Blueprints. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

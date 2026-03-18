@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Card Blueprints — Daily Cardology Readings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="Daily agent-written Cardology readings. Discover your birth card, understand your life timing, and get a personal video reading."/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:#050505;color:#f4f4f4;line-height:1.6}
+    a{color:#5b7cfa;text-decoration:none}
+    .hero{padding:80px 20px 60px;text-align:center}
+    h1{font-size:2.8rem;margin-bottom:.5rem;background:linear-gradient(135deg,#c084fc,#5b7cfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero p{max-width:600px;margin:.75rem auto;color:#c0b8d0;font-size:1.05rem}
+    .cta{display:inline-block;padding:14px 32px;background:#5b7cfa;color:#fff;border-radius:999px;font-weight:600;cursor:pointer;border:none;font-size:1rem;transition:opacity .2s}
+    .cta:hover{opacity:.85}
+    .cta:disabled{opacity:.5;cursor:not-allowed}
+    .cta-purple{background:linear-gradient(135deg,#7c3aed,#5b7cfa)}
+    .signup-msg{font-size:.85rem;margin-top:8px;min-height:18px}
+    .signup-msg.ok{color:#4ade80}.signup-msg.err{color:#f87171}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;padding:0 20px 40px;max-width:1100px;margin:0 auto}
+    .card{background:#111;border-radius:16px;padding:28px}
+    .card h3{margin-bottom:10px;color:#e0d9f0}
+    .card p{color:#9c8ab5;font-size:.9rem}
+    .section{padding:20px 20px 40px;max-width:1100px;margin:0 auto}
+    .section-label{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:#6b5a8a;margin-bottom:8px}
+    .divider{border:none;border-top:1px solid #1a1230;margin:0 20px 40px}
+    .reading-card{background:linear-gradient(135deg,#0f0a1e,#111);border:1px solid #4a2d8a;border-radius:16px;padding:36px;text-align:center;max-width:680px;margin:0 auto}
+    .reading-card h2{color:#c084fc;font-size:1.6rem;margin-bottom:12px}
+    .reading-card p{color:#c0b8d0;margin-bottom:16px}
+    .price-tag{display:inline-block;background:linear-gradient(135deg,#7c3aed,#5b7cfa);color:#fff;padding:6px 20px;border-radius:999px;font-weight:700;font-size:1.1rem;margin-bottom:20px}
+    .bullets{text-align:left;margin:0 auto 24px;max-width:420px;list-style:none}
+    .bullets li{padding:6px 0;color:#c0b8d0;font-size:.9rem}
+    .bullets li::before{content:"✦ ";color:#c084fc}
+    .course-card{background:#0d0b18;border:1px solid #2a1f4a;border-radius:16px;padding:28px;text-align:center}
+    .course-card h3{color:#e0d9f0;margin-bottom:8px}
+    .course-card p{color:#9c8ab5;font-size:.9rem;margin-bottom:16px}
+    .badge{display:inline-block;padding:3px 12px;border-radius:999px;font-size:.75rem;font-weight:600;margin-bottom:12px}
+    .badge-free{background:#14532d;color:#4ade80}
+    .badge-paid{background:#1e3a5f;color:#7dd3fc}
+    .badge-master{background:#2d1b4e;color:#c084fc}
+    footer{text-align:center;padding:32px 20px;font-size:.8rem;color:#4a3a6a;border-top:1px solid #111}
+    footer a{color:#6b5a8a;margin:0 8px}
+    footer a:hover{color:#c084fc}
+    @media(max-width:600px){h1{font-size:2rem}.reading-card{padding:24px}}
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>Card Blueprints</h1>
+  <p>Daily agent-written Cardology readings — the card tied to today's solar value, decoded into gifts, shadow, and next steps.</p>
+  <form id="hero-form" style="margin-bottom:.5rem">
+    <input id="hero-email" type="email" placeholder="you@example.com" style="padding:12px 18px;border-radius:999px;border:none;width:260px;max-width:80%;margin-right:8px;background:#1a1230;color:#f4f4f4">
+    <button type="submit" class="cta">Get the daily card</button>
+  </form>
+  <p class="signup-msg" id="hero-msg"></p>
+  <p style="margin-top:12px;font-size:.9rem"><a href="./logs" style="color:#6b5a8a">Browse the public log →</a></p>
+</section>
+
+<hr class="divider"/>
+
+<!-- Card offerings -->
+<div class="grid">
+  <div class="card">
+    <h3>🃏 Daily pull</h3>
+    <p>The card of the day for the collective — gifts, shadow, and action prompts. Published every morning.</p>
+  </div>
+  <div class="card">
+    <h3>🔮 Compatibility</h3>
+    <p>Agents map your card to partners, clients, or launches — automated reports coming soon.</p>
+  </div>
+  <div class="card">
+    <h3>📦 Signal Pack — $9</h3>
+    <p>The full weekly card library: all 52 cards decoded with planetary periods, Pluto, and Result cards.</p>
+    <button id="checkout-btn" class="cta" style="margin-top:16px;font-size:.9rem;padding:10px 24px">Unlock the pack</button>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- Personal video reading -->
+<section class="section">
+  <div class="section-label">Premium</div>
+  <div class="reading-card">
+    <h2>Your Personal Video Reading</h2>
+    <p>Submit one question and a date. I'll record a personal cardology reading just for you and deliver it within 7 business days.</p>
+    <div class="price-tag">$99</div>
+    <ul class="bullets">
+      <li>Personally recorded 10–15 min video — just for you</li>
+      <li>Full card breakdown for your chosen date: planetary periods, Pluto, Result &amp; more</li>
+      <li>Delivered to your inbox within 7 business days</li>
+    </ul>
+    <a href="/reading.html" class="cta cta-purple" style="display:inline-block">Book my reading →</a>
+    <p style="font-size:.8rem;margin-top:12px;color:#4a3a6a">For entertainment and self-reflection. Not professional advice.</p>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- Courses -->
+<section class="section">
+  <div class="section-label">Learn Cardology</div>
+  <div class="grid" style="padding:0">
+    <div class="course-card">
+      <span class="badge badge-free">Free</span>
+      <h3>Foundations Course</h3>
+      <p>7-day email course. Birth card, suits, numbers, planets, Life Spread, Spirit Spread, and 13-year cycles.</p>
+      <form id="course-form" style="margin-top:12px">
+        <input id="course-email" type="email" placeholder="your@email.com" style="padding:10px 16px;border-radius:999px;border:none;width:100%;background:#1a1230;color:#f4f4f4;margin-bottom:8px">
+        <button type="submit" class="cta" style="width:100%;font-size:.9rem;padding:10px">Start free course</button>
+      </form>
+      <p class="signup-msg" id="course-msg"></p>
+    </div>
+    <div class="course-card">
+      <span class="badge badge-paid">$29</span>
+      <h3>Complete Course</h3>
+      <p>Karma cards, long range yearly, Pluto &amp; Result, Environment &amp; Displacement, Mystical Family of 7, and 52-day cards.</p>
+      <p style="color:#4a3a6a;font-size:.85rem;margin-top:12px">Coming soon — join the waitlist below</p>
+    </div>
+    <div class="course-card">
+      <span class="badge badge-master">$97</span>
+      <h3>Master Course</h3>
+      <p>Everything plus: 90-year spreads, direct &amp; vertical cards, planetary ruling cards, how to perform readings, and the analog algorithm.</p>
+      <p style="color:#4a3a6a;font-size:.85rem;margin-top:12px">Coming soon — join the waitlist below</p>
+    </div>
+  </div>
+</section>
+
+<!-- Waitlist -->
+<section class="section" style="padding-top:0;text-align:center">
+  <div style="background:#0d0b18;border:1px solid #2a1f4a;border-radius:16px;padding:32px;max-width:520px;margin:0 auto">
+    <h3 style="color:#e0d9f0;margin-bottom:8px">Course Waitlist</h3>
+    <p style="color:#9c8ab5;font-size:.9rem;margin-bottom:16px">Be first in when the $29 and $97 courses open.</p>
+    <form id="waitlist-form">
+      <input id="waitlist-email" type="email" placeholder="you@example.com" style="padding:11px 18px;border-radius:999px;border:none;width:220px;max-width:70%;margin-right:8px;background:#1a1230;color:#f4f4f4">
+      <button type="submit" class="cta" style="font-size:.9rem;padding:11px 22px">Join waitlist</button>
+    </form>
+    <p class="signup-msg" id="waitlist-msg"></p>
+  </div>
+</section>
+
+<footer>
+  <div style="margin-bottom:8px">Zero-capital build · Automated by agents · © 2026 Card Blueprints</div>
+  <div>
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="/terms.html">Terms &amp; Conditions</a>
+    <a href="/refund.html">Refund Policy</a>
+  </div>
+</footer>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+const stripe = Stripe('pk_live_51SyNONDgoKThmC0IJfBVvvSMIKYPg3RIGot4NMG1HtNJal6inRtIfHg38MNW7HoHecIl0ZOMS6zrg55aeuFxudVt00OEBDLtFV');
+
+async function subscribe(email, source, msgEl, btn) {
+  const orig = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Subscribing…';
+  try {
+    const res  = await fetch('/api/subscribe.php', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,source})});
+    const data = await res.json();
+    if (data.success) {
+      msgEl.className = 'signup-msg ok';
+      msgEl.textContent = data.new ? "You're in ✓ Check your inbox." : "Already on the list ✓";
+      btn.textContent = '✓ Done';
+    } else { throw new Error(data.error||'Something went wrong'); }
+  } catch(e) {
+    msgEl.className = 'signup-msg err'; msgEl.textContent = e.message;
+    btn.disabled = false; btn.textContent = orig;
+  }
+}
+
+document.getElementById('hero-form').addEventListener('submit', e => {
+  e.preventDefault();
+  subscribe(document.getElementById('hero-email').value,'hero',document.getElementById('hero-msg'),e.target.querySelector('button'));
+});
+document.getElementById('course-form').addEventListener('submit', e => {
+  e.preventDefault();
+  subscribe(document.getElementById('course-email').value,'free-course',document.getElementById('course-msg'),e.target.querySelector('button'));
+});
+document.getElementById('waitlist-form').addEventListener('submit', e => {
+  e.preventDefault();
+  subscribe(document.getElementById('waitlist-email').value,'course-waitlist',document.getElementById('waitlist-msg'),e.target.querySelector('button'));
+});
+
+const btn = document.getElementById('checkout-btn');
+if (btn) {
+  btn.addEventListener('click', async () => {
+    btn.disabled = true; btn.textContent = 'Connecting…';
+    const res = await fetch('/api/checkout.php',{method:'POST'});
+    const data = await res.json();
+    if (!data.id) { alert('Unable to start checkout.'); btn.disabled=false; btn.textContent='Unlock the pack'; return; }
+    const result = await stripe.redirectToCheckout({sessionId:data.id});
+    if (result.error) { alert(result.error.message); btn.disabled=false; btn.textContent='Unlock the pack'; }
+  });
+}
+</script>
+</body>
+</html>
