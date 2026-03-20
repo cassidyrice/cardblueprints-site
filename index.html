@@ -2,126 +2,227 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <title>The Analog Algorithm — A Monthly Letter Written From Your Cards</title>
+  <title>Card Blueprints — The Mathematics Inside a Deck of Cards</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="description" content="A personal monthly letter based on the mathematical calendar hidden inside a standard deck of playing cards. $25/month — printed and mailed to your door."/>
+  <meta name="description" content="A personal monthly letter based on the mathematical calendar structure embedded in a standard deck of playing cards. $25/month — printed and mailed."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&display=swap" rel="stylesheet"/>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#050505;color:#f4f4f4;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-    a{color:#5b7cfa;text-decoration:none;transition:color .2s}
-    a:hover{color:#c084fc}
+    body{font-family:'Inter',system-ui,sans-serif;background:#08090c;color:#e8e8e8;line-height:1.6;-webkit-font-smoothing:antialiased}
+    a{color:#3B82F6;text-decoration:none;transition:color .2s}
+    a:hover{color:#60A5FA}
+
+    /* ── TYPOGRAPHY ── */
+    .mono{font-family:'JetBrains Mono',monospace}
+    .math{font-family:'Fraunces','Georgia',serif;font-style:italic}
 
     /* ── HERO ── */
     .hero{padding:120px 24px 100px;text-align:center;position:relative;overflow:hidden}
-    .hero::before{content:"";position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:1000px;height:700px;background:radial-gradient(ellipse at center,rgba(192,132,252,0.08) 0%,rgba(91,124,250,0.05) 40%,transparent 70%);pointer-events:none;animation:heroPulse 6s ease-in-out infinite alternate}
-    @keyframes heroPulse{0%{opacity:.7;transform:translateX(-50%) scale(1)}100%{opacity:1;transform:translateX(-50%) scale(1.05)}}
+    .hero::before{content:"52 = 52";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Fraunces',serif;font-size:clamp(120px,22vw,260px);font-weight:900;color:rgba(59,130,246,.03);white-space:nowrap;pointer-events:none;letter-spacing:-.05em}
 
-    .eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#c084fc;background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.18);border-radius:100px;padding:5px 16px;margin-bottom:32px;animation:fadeInUp .6s ease-out}
-    .hero h1{font-size:clamp(34px,6.5vw,60px);font-weight:900;letter-spacing:-.04em;line-height:1.08;max-width:780px;margin:0 auto 28px;background:linear-gradient(135deg,#f4f4f4 0%,#c9b8f0 50%,#5b7cfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fadeInUp .6s ease-out .1s both}
-    .hero-sub{font-size:18px;color:#999;max-width:620px;margin:0 auto 44px;line-height:1.7;animation:fadeInUp .6s ease-out .2s both}
-    .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeInUp .6s ease-out .3s both}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .hero-label{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#3B82F6;border:1px solid rgba(59,130,246,.2);border-radius:4px;padding:6px 16px;margin-bottom:36px;background:rgba(59,130,246,.05)}
+    .hero h1{font-family:'Fraunces',serif;font-size:clamp(32px,6vw,56px);font-weight:900;letter-spacing:-.03em;line-height:1.1;max-width:800px;margin:0 auto 28px;color:#f0f0f0}
+    .hero h1 span{color:#3B82F6}
+    .hero-sub{font-size:17px;color:#777;max-width:580px;margin:0 auto 44px;line-height:1.75}
+    .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
-    .btn-primary{display:inline-block;padding:16px 36px;background:linear-gradient(135deg,#5b7cfa,#9b6dfa,#c084fc);color:#fff;border-radius:999px;font-weight:700;font-size:1rem;border:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 24px rgba(91,124,250,.25)}
-    .btn-primary:hover{opacity:.9;color:#fff;transform:translateY(-1px);box-shadow:0 6px 30px rgba(91,124,250,.35)}
-    .btn-ghost{display:inline-block;padding:15px 34px;background:transparent;color:#777;border-radius:999px;font-weight:600;font-size:1rem;border:1px solid #222;cursor:pointer;transition:all .25s}
-    .btn-ghost:hover{border-color:#5b7cfa;color:#c084fc}
-    .hero-price{margin-top:20px;font-size:14px;color:#444;letter-spacing:.02em;animation:fadeInUp .6s ease-out .4s both}
-    .hero-price strong{color:#777}
+    .btn-primary{display:inline-block;padding:15px 32px;background:#3B82F6;color:#fff;border-radius:6px;font-weight:700;font-size:15px;border:none;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+    .btn-primary:hover{background:#2563EB;color:#fff;transform:translateY(-1px)}
+    .btn-ghost{display:inline-block;padding:14px 30px;background:transparent;color:#666;border-radius:6px;font-weight:600;font-size:15px;border:1px solid #1e1e1e;cursor:pointer;transition:all .2s}
+    .btn-ghost:hover{border-color:#3B82F6;color:#3B82F6}
+    .hero-note{margin-top:20px;font-size:13px;color:#444;font-family:'JetBrains Mono',monospace}
 
     /* ── DIVIDER ── */
-    .divider{border:none;border-top:1px solid #111;margin:0}
+    .divider{border:none;border-top:1px solid #141419;margin:0}
 
-    /* ── SECTION SHARED ── */
-    .section{padding:80px 24px;max-width:1000px;margin:0 auto}
-    .section-label{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#5b7cfa;margin-bottom:24px}
-    .section-heading{font-size:clamp(22px,3.5vw,32px);font-weight:800;letter-spacing:-.03em;color:#e0d9f0;margin-bottom:12px;line-height:1.25}
-    .section-sub{font-size:.95rem;color:#555;line-height:1.7;max-width:560px}
+    /* ── PROOF SECTION ── */
+    .proof{padding:100px 24px;max-width:900px;margin:0 auto}
+    .proof-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#3B82F6;margin-bottom:32px}
+    .proof h2{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-.02em;color:#e0e0e0;margin-bottom:20px;line-height:1.2}
+    .proof-text{color:#777;font-size:15px;line-height:1.85;max-width:640px;margin-bottom:48px}
+    .proof-text strong{color:#bbb;font-weight:600}
 
-    /* ── THE SYSTEM / MATH ── */
-    .system-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:#151515;border:1px solid #151515;border-radius:18px;overflow:hidden;margin-top:12px}
-    .system-stat{background:#070707;padding:32px 24px;transition:background .3s}
-    .system-stat:hover{background:#0c0c0c}
-    .system-stat .num{font-size:2.4rem;font-weight:900;letter-spacing:-.05em;color:#f4f4f4;margin-bottom:8px;background:linear-gradient(135deg,#f4f4f4,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .system-stat .label{font-size:.82rem;color:#555;line-height:1.6}
+    /* ── EQUATION GRID ── */
+    .eq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#141419;border:1px solid #141419;border-radius:12px;overflow:hidden;margin-bottom:48px}
+    @media(max-width:600px){.eq-grid{grid-template-columns:1fr}}
+    .eq-cell{background:#0c0d12;padding:36px 28px;position:relative}
+    .eq-cell:hover{background:#0e1017}
+    .eq-num{font-family:'Fraunces',serif;font-size:3rem;font-weight:900;color:#f0f0f0;letter-spacing:-.04em;margin-bottom:4px}
+    .eq-equals{font-family:'Fraunces',serif;font-size:3rem;font-weight:400;color:#3B82F6;margin-bottom:4px}
+    .eq-label{font-size:13px;color:#555;line-height:1.6}
+    .eq-label strong{color:#888;font-weight:600}
 
-    /* ── EXPLAINER ── */
-    .explainer{max-width:680px;margin:0 auto;padding:80px 24px}
-    .explainer h2{font-size:clamp(22px,3.5vw,32px);font-weight:800;letter-spacing:-.03em;color:#e0d9f0;margin-bottom:24px;line-height:1.25}
-    .explainer p{color:#777;font-size:.95rem;line-height:1.85;margin-bottom:1.2rem}
-    .explainer p:last-child{margin-bottom:0}
-    .explainer strong{color:#bbb;font-weight:500}
+    /* ── THE EQUATION (big centered) ── */
+    .big-eq{padding:80px 24px;text-align:center;position:relative}
+    .big-eq-inner{max-width:800px;margin:0 auto;background:#0c0d12;border:1px solid #141419;border-radius:16px;padding:60px 40px;position:relative;overflow:hidden}
+    .big-eq-inner::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,.3),transparent)}
+    .equation{font-family:'Fraunces',serif;font-size:clamp(18px,3.5vw,28px);color:#e0e0e0;line-height:2.2;letter-spacing:.01em}
+    .equation .blue{color:#3B82F6}
+    .equation .dim{color:#555}
+    .eq-caption{font-size:13px;color:#444;margin-top:24px;font-family:'JetBrains Mono',monospace;line-height:1.7}
 
-    /* ── WHAT'S IN THE LETTER ── */
-    .letter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:12px}
-    .letter-card{background:#0a0a0a;border:1px solid #161616;border-radius:16px;padding:28px;transition:border-color .3s,transform .3s}
-    .letter-card:hover{border-color:#2a1f4a;transform:translateY(-2px)}
-    .letter-icon{font-size:1.5rem;margin-bottom:12px;opacity:.6}
-    .letter-card h3{color:#e0d9f0;font-size:.95rem;font-weight:700;margin-bottom:10px}
-    .letter-card p{color:#555;font-size:.88rem;line-height:1.7}
+    /* ── BREAKDOWN ── */
+    .breakdown{padding:100px 24px;max-width:900px;margin:0 auto}
+    .breakdown h2{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-.02em;color:#e0e0e0;margin-bottom:20px;line-height:1.2}
+    .bd-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#3B82F6;margin-bottom:32px}
+    .bd-text{color:#777;font-size:15px;line-height:1.85;max-width:640px;margin-bottom:48px}
+    .bd-text strong{color:#bbb;font-weight:600}
 
-    /* ── SOCIAL PROOF / CALLOUT ── */
-    .callout{padding:60px 24px;text-align:center;position:relative}
-    .callout-inner{max-width:600px;margin:0 auto;background:#0a0812;border:1px solid #1a1530;border-radius:20px;padding:48px 40px;position:relative;overflow:hidden}
-    .callout-inner::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at center,rgba(91,124,250,.04) 0%,transparent 60%);pointer-events:none}
-    .callout-quote{font-size:1.1rem;color:#bbb;line-height:1.8;font-style:italic;margin-bottom:16px;position:relative;z-index:1}
-    .callout-attr{font-size:.82rem;color:#444;position:relative;z-index:1}
+    .bd-steps{display:grid;gap:1px;background:#141419;border:1px solid #141419;border-radius:12px;overflow:hidden}
+    .bd-step{background:#0c0d12;padding:32px 28px;display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:start}
+    .bd-step:hover{background:#0e1017}
+    .bd-step-num{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:#3B82F6;line-height:1}
+    .bd-step h3{font-size:15px;font-weight:700;color:#ccc;margin-bottom:6px}
+    .bd-step p{font-size:14px;color:#555;line-height:1.7}
+    .bd-step .formula{font-family:'JetBrains Mono',monospace;font-size:13px;color:#3B82F6;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.12);border-radius:4px;padding:8px 12px;margin-top:10px;display:inline-block}
 
-    /* ── PLAN ── */
-    .plan-section{padding:80px 24px;background:#03030a;border-top:1px solid #111;border-bottom:1px solid #111}
-    .plan-inner{max-width:540px;margin:0 auto;text-align:center}
-    .plan-inner .section-label{text-align:center;display:block}
-    .plan-heading{font-size:clamp(22px,3.5vw,32px);font-weight:800;letter-spacing:-.03em;color:#e0d9f0;margin-bottom:8px}
-    .plan-subhead{font-size:.95rem;color:#555;margin-bottom:40px}
+    /* ── WHAT YOU GET ── */
+    .deliverable{padding:100px 24px;max-width:900px;margin:0 auto}
+    .del-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#3B82F6;margin-bottom:32px}
+    .deliverable h2{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-.02em;color:#e0e0e0;margin-bottom:20px;line-height:1.2}
+    .del-text{color:#777;font-size:15px;line-height:1.85;max-width:640px;margin-bottom:48px}
+    .del-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+    .del-card{background:#0c0d12;border:1px solid #141419;border-radius:10px;padding:28px;transition:border-color .3s}
+    .del-card:hover{border-color:#1e2a4a}
+    .del-card-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:#3B82F6;margin-bottom:12px}
+    .del-card h3{color:#ccc;font-size:15px;font-weight:700;margin-bottom:8px}
+    .del-card p{color:#555;font-size:14px;line-height:1.7}
 
-    /* billing toggle */
-    .toggle-wrap{display:inline-flex;background:#0e0e0e;border:1px solid #1e1e1e;border-radius:999px;padding:4px;gap:0;margin-bottom:40px}
-    .toggle-btn{padding:10px 26px;border-radius:999px;border:none;background:transparent;color:#555;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',inherit}
-    .toggle-btn.active{background:linear-gradient(135deg,rgba(91,124,250,.15),rgba(192,132,252,.12));color:#f4f4f4;box-shadow:0 0 12px rgba(91,124,250,.1)}
-    .toggle-save{display:inline-block;font-size:.72rem;background:rgba(74,222,128,.12);color:#4ade80;border-radius:999px;padding:2px 10px;margin-left:6px;font-weight:700}
+    /* ── PLAN / CHECKOUT ── */
+    .plan-section{padding:100px 24px;background:#06070a;border-top:1px solid #141419;border-bottom:1px solid #141419}
+    .plan-inner{max-width:520px;margin:0 auto;text-align:center}
+    .plan-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#3B82F6;margin-bottom:32px;display:block}
+    .plan-heading{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-.02em;color:#e0e0e0;margin-bottom:8px}
+    .plan-subhead{font-size:15px;color:#555;margin-bottom:40px}
 
-    .plan-card{background:#0d0b18;border:1px solid #2a1f4a;border-radius:22px;padding:44px;text-align:left;position:relative;overflow:hidden}
-    .plan-card::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(192,132,252,.3),transparent)}
+    .toggle-wrap{display:inline-flex;background:#0c0d12;border:1px solid #1a1a22;border-radius:6px;padding:3px;gap:0;margin-bottom:40px}
+    .toggle-btn{padding:10px 24px;border-radius:4px;border:none;background:transparent;color:#555;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+    .toggle-btn.active{background:#3B82F6;color:#fff}
+    .toggle-save{display:inline-block;font-size:11px;background:rgba(74,222,128,.12);color:#4ade80;border-radius:3px;padding:2px 8px;margin-left:6px;font-weight:700}
+
+    .plan-card{background:#0c0d12;border:1px solid #1a1a22;border-radius:12px;padding:40px;text-align:left}
     .plan-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
-    .plan-price{font-size:3.5rem;font-weight:900;letter-spacing:-.05em;color:#f4f4f4}
-    .plan-period{font-size:1rem;color:#555;font-weight:400}
-    .plan-equiv{font-size:.82rem;color:#4ade80;margin-bottom:28px;min-height:20px}
-    .plan-features{list-style:none;margin-bottom:36px}
-    .plan-features li{font-size:.9rem;color:#c0b8d0;padding:10px 0;border-bottom:1px solid #111;display:flex;gap:12px;align-items:flex-start}
+    .plan-price{font-family:'Fraunces',serif;font-size:3.2rem;font-weight:900;letter-spacing:-.04em;color:#f0f0f0}
+    .plan-period{font-size:15px;color:#555}
+    .plan-equiv{font-size:13px;color:#4ade80;margin-bottom:28px;min-height:20px;font-family:'JetBrains Mono',monospace}
+    .plan-features{list-style:none;margin-bottom:32px}
+    .plan-features li{font-size:14px;color:#999;padding:10px 0;border-bottom:1px solid #141419;display:flex;gap:12px;align-items:flex-start}
     .plan-features li:last-child{border-bottom:none}
-    .plan-features li::before{content:"✓";color:#5b7cfa;flex-shrink:0;font-weight:700}
+    .plan-features li::before{content:"+";color:#3B82F6;flex-shrink:0;font-weight:700;font-family:'JetBrains Mono',monospace}
 
-    .plan-form input{width:100%;background:#07070f;border:1px solid #1e1e35;border-radius:12px;color:#f4f4f4;font-family:'Inter',inherit;font-size:15px;padding:14px 16px;outline:none;margin-bottom:10px;transition:border-color .2s,box-shadow .2s}
-    .plan-form input:focus{border-color:#5b7cfa;box-shadow:0 0 0 3px rgba(91,124,250,.1)}
+    .plan-form input{width:100%;background:#08090c;border:1px solid #1a1a22;border-radius:6px;color:#e8e8e8;font-family:'Inter',sans-serif;font-size:15px;padding:13px 16px;outline:none;margin-bottom:10px;transition:border-color .2s}
+    .plan-form input:focus{border-color:#3B82F6}
     .plan-form input::placeholder{color:#333}
-    .plan-btn{display:block;width:100%;padding:16px;background:linear-gradient(135deg,#5b7cfa,#7c5bfa,#c084fc);color:#fff;border:none;border-radius:14px;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .25s;font-family:'Inter',inherit;letter-spacing:.01em;box-shadow:0 4px 20px rgba(91,124,250,.2)}
-    .plan-btn:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 6px 28px rgba(91,124,250,.3)}
-    .plan-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
-    .plan-status{font-size:.83rem;margin-top:12px;min-height:18px;text-align:center}
+    .plan-btn{display:block;width:100%;padding:15px;background:#3B82F6;color:#fff;border:none;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+    .plan-btn:hover{background:#2563EB;transform:translateY(-1px)}
+    .plan-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+    .plan-status{font-size:13px;margin-top:12px;min-height:18px;text-align:center}
     .plan-status.ok{color:#4ade80}.plan-status.err{color:#f87171}
-    .plan-note{font-size:.78rem;color:#333;text-align:center;margin-top:12px}
+    .plan-note{font-size:12px;color:#333;text-align:center;margin-top:12px;font-family:'JetBrains Mono',monospace}
 
     /* ── FINAL CTA ── */
-    .final-cta{padding:80px 24px;text-align:center}
-    .final-cta h2{font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-.02em;margin-bottom:12px;color:#e0d9f0}
-    .final-cta p{color:#555;margin-bottom:32px;font-size:.95rem;line-height:1.7;max-width:480px;margin-left:auto;margin-right:auto}
+    .final-cta{padding:100px 24px;text-align:center}
+    .final-cta h2{font-family:'Fraunces',serif;font-size:clamp(22px,3.5vw,32px);font-weight:900;letter-spacing:-.02em;margin-bottom:16px;color:#e0e0e0}
+    .final-cta p{color:#555;margin-bottom:32px;font-size:15px;line-height:1.7;max-width:480px;margin-left:auto;margin-right:auto}
 
     /* ── FOOTER ── */
-    footer{text-align:center;padding:40px 20px;font-size:.78rem;color:#333;border-top:1px solid #0d0d0d}
+    footer{text-align:center;padding:40px 20px;font-size:12px;color:#333;border-top:1px solid #141419}
     footer a{color:#333;margin:0 10px;transition:color .2s}
-    footer a:hover{color:#5b7cfa}
-    .footer-name{margin-bottom:8px;color:#222}
+    footer a:hover{color:#3B82F6}
+    .footer-name{margin-bottom:8px;color:#222;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em}
     .footer-disclaimer{margin-top:10px;color:#222}
 
+    /* ── MOBILE ── */
     @media(max-width:600px){
-      .hero{padding:80px 20px 64px}
-      .system-grid{grid-template-columns:1fr 1fr}
-      .plan-card{padding:28px 22px}
-      .callout-inner{padding:32px 24px}
-      .plan-price{font-size:2.8rem}
+      /* Larger tap targets, thumb-friendly spacing */
+      body{font-size:16px;-webkit-text-size-adjust:100%}
+
+      .hero{padding:72px 20px 56px}
+      .hero h1{font-size:28px;letter-spacing:-.02em;margin-bottom:20px}
+      .hero-sub{font-size:15px;line-height:1.7;margin-bottom:32px}
+      .hero-label{font-size:11px;padding:5px 14px;margin-bottom:28px}
+      .hero::before{font-size:80px}
+      .hero-actions{flex-direction:column;gap:10px;align-items:stretch;padding:0 8px}
+      .btn-primary,.btn-ghost{width:100%;text-align:center;padding:16px 20px;font-size:16px;min-height:50px;display:flex;align-items:center;justify-content:center}
+      .hero-note{font-size:11px;margin-top:16px}
+
+      /* Proof section */
+      .proof{padding:60px 20px}
+      .proof h2{font-size:24px}
+      .proof-text{font-size:14px;margin-bottom:32px}
+      .eq-grid{grid-template-columns:1fr 1fr}
+      .eq-cell{padding:24px 16px}
+      .eq-num{font-size:2.2rem}
+      .eq-equals{font-size:2.2rem}
+      .eq-label{font-size:12px}
+
+      /* Big equation */
+      .big-eq{padding:48px 16px}
+      .big-eq-inner{padding:32px 16px;border-radius:12px}
+      .equation{font-size:16px;line-height:2.4}
+      .eq-caption{font-size:11px;line-height:1.6}
+
+      /* Breakdown / system */
+      .breakdown{padding:60px 20px}
+      .breakdown h2{font-size:24px}
+      .bd-text{font-size:14px;margin-bottom:32px}
+      .bd-step{grid-template-columns:36px 1fr;gap:12px;padding:24px 18px}
+      .bd-step-num{font-size:1.5rem}
+      .bd-step h3{font-size:14px}
+      .bd-step p{font-size:13px}
+      .bd-step .formula{font-size:11px;padding:6px 10px;margin-top:8px;word-break:break-all;max-width:100%;overflow-x:auto}
+
+      /* Deliverables */
+      .deliverable{padding:60px 20px}
+      .deliverable h2{font-size:24px}
+      .del-text{font-size:14px;margin-bottom:32px}
+      .del-grid{grid-template-columns:1fr;gap:12px}
+      .del-card{padding:22px 18px}
+      .del-card h3{font-size:14px}
+      .del-card p{font-size:13px}
+
+      /* Plan / checkout */
+      .plan-section{padding:60px 16px}
+      .plan-heading{font-size:24px}
+      .plan-subhead{font-size:14px;margin-bottom:28px}
+      .toggle-wrap{margin-bottom:28px}
+      .toggle-btn{padding:10px 20px;font-size:13px}
+      .plan-card{padding:24px 18px;border-radius:10px}
+      .plan-price{font-size:2.6rem}
+      .plan-period{font-size:14px}
+      .plan-features li{font-size:13px;padding:9px 0}
+      .plan-form input{font-size:16px;padding:14px 16px;border-radius:8px;-webkit-appearance:none}
+      .plan-btn{font-size:16px;padding:16px;min-height:52px;border-radius:8px;-webkit-appearance:none}
+      .plan-note{font-size:11px}
+
+      /* Final CTA */
+      .final-cta{padding:60px 20px}
+      .final-cta h2{font-size:22px}
+      .final-cta p{font-size:14px}
+      .final-cta .btn-primary{width:100%;text-align:center;padding:16px 20px;font-size:16px;min-height:50px;display:flex;align-items:center;justify-content:center}
+
+      /* Footer */
+      footer{padding:32px 20px}
+      footer a{margin:0 8px;font-size:12px}
+    }
+
+    /* ── SMALL PHONES ── */
+    @media(max-width:380px){
+      .hero h1{font-size:24px}
+      .eq-grid{grid-template-columns:1fr}
+      .equation{font-size:14px}
+      .plan-price{font-size:2.2rem}
+      .bd-step .formula{font-size:10px}
+    }
+
+    /* ── TOUCH DEVICE OPTIMIZATIONS ── */
+    @media(hover:none){
+      .eq-cell:hover,.bd-step:hover,.del-card:hover{background:inherit;border-color:inherit;transform:none}
+      .btn-primary:hover{transform:none}
+      .btn-primary:active{opacity:.85}
+      .btn-ghost:active{border-color:#3B82F6;color:#3B82F6}
     }
   </style>
 </head>
@@ -129,99 +230,148 @@
 
 <!-- ─── HERO ─── -->
 <section class="hero" id="top">
-  <div class="eyebrow">The Analog Algorithm</div>
-  <h1>A personal letter written from the cards active in your life right now.</h1>
-  <p class="hero-sub">Every month, the cards assigned to your birth date shift position. Your letter maps those patterns and translates them into plain language — printed, sealed, and mailed to your door.</p>
+  <div class="hero-label">Card Blueprints</div>
+  <h1>A deck of cards is a <span>mathematical model</span> of the year.</h1>
+  <p class="hero-sub">52 cards. 52 weeks. The pip values sum to 365. Your birth date assigns you a position in this structure. Each month, we calculate what's active and mail you the breakdown.</p>
   <div class="hero-actions">
-    <a href="#plan" class="btn-primary">Get my letter — $25/mo</a>
-    <a href="#how-it-works" class="btn-ghost">How it works</a>
+    <a href="#plan" class="btn-primary">Get your blueprint — $25/mo</a>
+    <a href="#proof" class="btn-ghost">See the math</a>
   </div>
-  <div class="hero-price"><strong>$25/month</strong> — cancel anytime. No contracts.</div>
+  <div class="hero-note">$25/month &middot; cancel anytime &middot; no contracts</div>
 </section>
 
 <hr class="divider"/>
 
-<!-- ─── THE MATHEMATICS ─── -->
-<div class="section">
-  <div class="section-label">The mathematics</div>
-  <div class="system-grid">
-    <div class="system-stat">
-      <div class="num">52</div>
-      <div class="label">Cards in a deck.<br/>Weeks in a year.</div>
+<!-- ─── THE PROOF ─── -->
+<section class="proof" id="proof">
+  <div class="proof-label">The proof</div>
+  <h2>These are not approximations.</h2>
+  <p class="proof-text">The correspondence between a standard deck of playing cards and the calendar year is <strong>exact</strong>. Not metaphorical. Not rounded. The numbers lock in perfectly.</p>
+
+  <div class="eq-grid">
+    <div class="eq-cell">
+      <div class="eq-num">52</div>
+      <div class="eq-equals">=</div>
+      <div class="eq-label"><strong>Cards in a deck</strong><br/>Weeks in a year</div>
     </div>
-    <div class="system-stat">
-      <div class="num">365</div>
-      <div class="label">Pip total of all cards.<br/>Days in a year.</div>
+    <div class="eq-cell">
+      <div class="eq-num">4</div>
+      <div class="eq-equals">=</div>
+      <div class="eq-label"><strong>Suits</strong><br/>Seasons</div>
     </div>
-    <div class="system-stat">
-      <div class="num">4</div>
-      <div class="label">Suits in a deck.<br/>Seasons in a year.</div>
+    <div class="eq-cell">
+      <div class="eq-num">13</div>
+      <div class="eq-equals">=</div>
+      <div class="eq-label"><strong>Cards per suit</strong><br/>Weeks per season</div>
     </div>
-    <div class="system-stat">
-      <div class="num">13</div>
-      <div class="label">Cards per suit.<br/>Weeks per season.</div>
+    <div class="eq-cell">
+      <div class="eq-num">365</div>
+      <div class="eq-equals">=</div>
+      <div class="eq-label"><strong>Sum of all pip values</strong><br/>Days in a year</div>
     </div>
   </div>
-</div>
+
+  <p class="proof-text">Add every pip value in the deck: Aces through 10s at face value, Jacks = 11, Queens = 12, Kings = 13. Four suits of 91 each. <strong>4 &times; 91 = 364</strong>. Add the Joker. <strong>365</strong>.</p>
+</section>
 
 <hr class="divider"/>
 
-<!-- ─── HOW IT WORKS ─── -->
-<div class="explainer" id="how-it-works">
-  <h2>A calendar that has been hiding in plain sight.</h2>
-  <p>Every standard deck of playing cards is a perfect mathematical model of the solar year. The correspondence is exact — not approximate, not coincidental. 52 cards to 52 weeks. 4 suits to 4 seasons. 13 values per suit to 13 weeks per season. The pip values of every card in the deck sum to 365.</p>
-  <p>The system built on top of this correspondence assigns every calendar date to a specific card. Your birth date determines your birth card — a fixed position in the system. From there, a second layer of structure maps a sequence of cards to each year of your life, and within each year, <strong>the active cards shift on a precise 52-day cycle</strong>.</p>
-  <p>This structure has been documented across multiple independent traditions dating back further than most people know. It survived by being embedded in something ordinary enough that no one looked closely. A deck of cards sits on every kitchen table. The calendar inside it goes largely unnoticed.</p>
-  <p>Your letter identifies which cards are active in your current cycle, describes the pattern each one represents, and draws the connection to your actual circumstances. <strong>No interpretation is invented.</strong> The positions are calculated. The patterns are documented. What you do with the awareness is yours.</p>
-</div>
+<!-- ─── BIG EQUATION ─── -->
+<section class="big-eq">
+  <div class="big-eq-inner">
+    <div class="equation">
+      <span class="dim">(</span> 1 + 2 + 3 + ... + 13 <span class="dim">)</span> <span class="blue">&times;</span> 4 <span class="blue">+</span> 1<br/>
+      <span class="blue">=</span> <span class="dim">(</span> 91 <span class="dim">)</span> <span class="blue">&times;</span> 4 <span class="blue">+</span> 1<br/>
+      <span class="blue">= 365</span>
+    </div>
+    <div class="eq-caption">Sum of one suit (1+2+...+13 = 91) &times; four suits + one Joker = days in a year</div>
+  </div>
+</section>
 
 <hr class="divider"/>
 
-<!-- ─── WHAT'S IN EACH LETTER ─── -->
-<div class="section">
-  <div class="section-label">What's in each letter</div>
-  <div class="letter-grid">
-    <div class="letter-card">
-      <div class="letter-icon">♠</div>
-      <h3>Your birth card</h3>
-      <p>The fixed card assigned to your birthday. The baseline pattern — tendencies, blind spots, and characteristic strengths that the rest of the system reads through.</p>
+<!-- ─── HOW THE SYSTEM WORKS ─── -->
+<section class="breakdown" id="how-it-works">
+  <div class="bd-label">The system</div>
+  <h2>How a birth date becomes a monthly blueprint.</h2>
+  <p class="bd-text">The card-calendar system maps every day of the year to a specific card. From that assignment, a set of mathematical operations produces your full layout.</p>
+
+  <div class="bd-steps">
+    <div class="bd-step">
+      <div class="bd-step-num">1</div>
+      <div>
+        <h3>Birth card assignment</h3>
+        <p>Each of the 365 days maps to one of the 52 cards. Your birthday determines your birth card — your fixed position in the deck. This never changes.</p>
+        <div class="formula">date(MM/DD) &rarr; card[n] where n &isin; {1..52}</div>
+      </div>
     </div>
-    <div class="letter-card">
-      <div class="letter-icon">♥</div>
-      <h3>Current active cards</h3>
-      <p>The cards in motion right now. Every 52 days a new set of cards becomes active in your personal spread. Your letter covers the month ahead within that cycle.</p>
+    <div class="bd-step">
+      <div class="bd-step-num">2</div>
+      <div>
+        <h3>Yearly card rotation</h3>
+        <p>Each year of your life, a new card takes the primary position in your layout. This follows a fixed sequence — determined entirely by your birth card and your current age.</p>
+        <div class="formula">card[n] + age &rarr; yearly_position</div>
+      </div>
     </div>
-    <div class="letter-card">
-      <div class="letter-icon">♦</div>
-      <h3>Yearly position cards</h3>
-      <p>Long range, result, environment, displacement — the structural cards that set the context for your current year. Each one describes a different dimension of the period you're in.</p>
+    <div class="bd-step">
+      <div class="bd-step-num">3</div>
+      <div>
+        <h3>The 52-day cycle</h3>
+        <p>Within each year, your active cards shift every 52 days. Seven periods per year, each governed by a different card in your sequence. This is where the month-to-month changes come from.</p>
+        <div class="formula">year_day &divide; 52 &rarr; period[0..6] &rarr; active_cards[]</div>
+      </div>
     </div>
-    <div class="letter-card">
-      <div class="letter-icon">♣</div>
-      <h3>The letter itself</h3>
-      <p>400–600 words written directly to you. The patterns translated into plain language — what they look like in practice, where friction shows up, and where leverage is.</p>
+    <div class="bd-step">
+      <div class="bd-step-num">4</div>
+      <div>
+        <h3>The full layout</h3>
+        <p>Your birth card, yearly position cards, and current period cards combine into a complete layout. Each card occupies a named position — long range, result, environment, displacement — describing a different dimension of the current period.</p>
+        <div class="formula">layout = { birth, yearly[7], period[active] }</div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 <hr class="divider"/>
 
-<!-- ─── CALLOUT ─── -->
-<div class="callout">
-  <div class="callout-inner">
-    <p class="callout-quote">"The system doesn't predict anything. It identifies the mathematical pattern your current cycle sits inside — and describes what that pattern tends to produce."</p>
-    <p class="callout-attr">— The Analog Algorithm</p>
+<!-- ─── WHAT YOU GET ─── -->
+<section class="deliverable">
+  <div class="del-label">The output</div>
+  <h2>What arrives each month.</h2>
+  <p class="del-text">We run the calculations for your current period and translate the layout into a letter. No jargon. No vague language. Specific positions, specific patterns.</p>
+
+  <div class="del-grid">
+    <div class="del-card">
+      <div class="del-card-num">01</div>
+      <h3>Your card positions</h3>
+      <p>Birth card, yearly cards, and current active cards — all calculated for the exact period your letter covers.</p>
+    </div>
+    <div class="del-card">
+      <div class="del-card-num">02</div>
+      <h3>Pattern analysis</h3>
+      <p>What each position means in plain language. Where friction shows up, where leverage is, what the structural pattern tends to produce.</p>
+    </div>
+    <div class="del-card">
+      <div class="del-card-num">03</div>
+      <h3>A personal letter</h3>
+      <p>400-600 words written directly to you. The math translated into practical observations about the month ahead.</p>
+    </div>
+    <div class="del-card">
+      <div class="del-card-num">04</div>
+      <h3>Printed and mailed</h3>
+      <p>Quality paper, sealed envelope, delivered to your door in the first week of each month.</p>
+    </div>
   </div>
-</div>
+</section>
 
 <hr class="divider"/>
 
 <!-- ─── PLAN / CHECKOUT ─── -->
 <div class="plan-section" id="plan">
   <div class="plan-inner">
-    <span class="section-label">Your letter</span>
-    <h2 class="plan-heading">Printed and mailed to you every month.</h2>
-    <p class="plan-subhead">Billed monthly or yearly. Cancel anytime.</p>
+    <span class="plan-label">Subscribe</span>
+    <h2 class="plan-heading">Get your blueprint.</h2>
+    <p class="plan-subhead">Calculated, written, printed, and mailed monthly.</p>
 
     <div class="toggle-wrap">
       <button class="toggle-btn active" id="toggle-monthly" onclick="setBilling('monthly')">Monthly</button>
@@ -236,11 +386,11 @@
       <div class="plan-equiv" id="equiv-display">&nbsp;</div>
 
       <ul class="plan-features">
-        <li>Your cards calculated for the month — birth card, active cycle cards, yearly position cards</li>
-        <li>A personal letter written to you in plain language — 400–600 words, no jargon</li>
-        <li>Printed on quality paper stock and mailed in a sealed envelope</li>
-        <li>Arrives in the first week of each month</li>
-        <li>Cancel anytime — no commitments, no hassle</li>
+        <li>Full card layout calculated for your birth date and current cycle</li>
+        <li>Personal letter — 400-600 words, plain language, no jargon</li>
+        <li>Printed on quality stock and mailed in a sealed envelope</li>
+        <li>Arrives first week of each month</li>
+        <li>Cancel anytime</li>
       </ul>
 
       <form class="plan-form" id="plan-form" novalidate>
@@ -248,9 +398,9 @@
         <input type="email" id="p-email" placeholder="Email address" autocomplete="email" required/>
         <input type="text" id="p-birthday" placeholder="Birthday (MM/DD/YYYY)" inputmode="numeric" required/>
         <input type="text" id="p-address" placeholder="Mailing address" autocomplete="street-address" required/>
-        <button type="submit" class="plan-btn" id="plan-btn">Get my letter — $25/mo</button>
+        <button type="submit" class="plan-btn" id="plan-btn">Get my blueprint — $25/mo</button>
         <div class="plan-status" id="plan-status"></div>
-        <div class="plan-note">Secure checkout via Stripe. No automatic renewals without notice.</div>
+        <div class="plan-note">Secure checkout via Stripe</div>
       </form>
     </div>
   </div>
@@ -260,27 +410,27 @@
 
 <!-- ─── FINAL CTA ─── -->
 <div class="final-cta">
-  <h2>The cards are already in motion.</h2>
-  <p>Your birth date assigned you a card. That card is sitting in a specific position right now. Your letter tells you what it means.</p>
+  <h2>The math is already running.</h2>
+  <p>Your birth date assigned you a card. That card sits in a specific position this month. Your blueprint shows you which one and what it means.</p>
   <a href="#plan" class="btn-primary">Start for $25/mo</a>
 </div>
 
 <footer>
-  <div class="footer-name">Card Blueprints — The Analog Algorithm</div>
+  <div class="footer-name">CARD BLUEPRINTS</div>
   <div>
     <a href="/privacy.html">Privacy</a>
     <a href="/terms.html">Terms</a>
     <a href="/refund.html">Refund Policy</a>
   </div>
-  <div class="footer-disclaimer">For self-reflection and pattern recognition. Not professional advice.</div>
+  <div class="footer-disclaimer">For pattern recognition and self-reflection. Not professional advice.</div>
 </footer>
 
 <script>
 let currentBilling = 'monthly';
 
 const prices = {
-  monthly: { display: '$25', period: '/ month', equiv: '\u00A0', btnLabel: 'Get my letter — $25/mo' },
-  yearly:  { display: '$250', period: '/ year', equiv: '$20.83/month — save $50', btnLabel: 'Get my letter — $250/yr' }
+  monthly: { display: '$25', period: '/ month', equiv: '\u00A0', btnLabel: 'Get my blueprint \u2014 $25/mo' },
+  yearly:  { display: '$250', period: '/ year', equiv: '$20.83/month \u2014 save $50', btnLabel: 'Get my blueprint \u2014 $250/yr' }
 };
 
 function setBilling(type) {
@@ -288,8 +438,7 @@ function setBilling(type) {
   const p = prices[type];
   document.getElementById('price-display').textContent = p.display;
   document.getElementById('period-display').textContent = p.period;
-  const equiv = document.getElementById('equiv-display');
-  equiv.textContent = p.equiv;
+  document.getElementById('equiv-display').textContent = p.equiv;
   document.getElementById('plan-btn').textContent = p.btnLabel;
   document.getElementById('toggle-monthly').classList.toggle('active', type === 'monthly');
   document.getElementById('toggle-yearly').classList.toggle('active', type === 'yearly');
@@ -313,7 +462,7 @@ document.getElementById('plan-form').addEventListener('submit', async e => {
   if (!address) { statusEl.className='plan-status err'; statusEl.textContent='Please enter your mailing address.'; return; }
 
   const orig = btn.textContent;
-  btn.disabled = true; btn.textContent = 'Redirecting to checkout…';
+  btn.disabled = true; btn.textContent = 'Redirecting to checkout\u2026';
 
   try {
     const res = await fetch('/api/subscribe-checkout.php', {
@@ -331,7 +480,6 @@ document.getElementById('plan-form').addEventListener('submit', async e => {
   }
 });
 
-// Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
