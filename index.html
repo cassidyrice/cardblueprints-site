@@ -2,227 +2,192 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <title>Card Blueprints — The Mathematics Inside a Deck of Cards</title>
+  <title>Card Blueprints — The Geometry Inside a Deck of Cards</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="description" content="A personal monthly letter based on the mathematical calendar structure embedded in a standard deck of playing cards. $25/month — printed and mailed."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',system-ui,sans-serif;background:#08090c;color:#e8e8e8;line-height:1.6;-webkit-font-smoothing:antialiased}
-    a{color:#3B82F6;text-decoration:none;transition:color .2s}
-    a:hover{color:#60A5FA}
+    body{font-family:'Inter',system-ui,sans-serif;background:#f6f4f0;color:#2a2a2a;line-height:1.7;-webkit-font-smoothing:antialiased}
+    a{color:#c4626a;text-decoration:none;transition:color .2s}
+    a:hover{color:#a04850}
 
-    /* ── TYPOGRAPHY ── */
+    .serif{font-family:'Cormorant Garamond',Georgia,serif}
     .mono{font-family:'JetBrains Mono',monospace}
-    .math{font-family:'Fraunces','Georgia',serif;font-style:italic}
 
     /* ── HERO ── */
-    .hero{padding:120px 24px 100px;text-align:center;position:relative;overflow:hidden}
-    .hero::before{content:"52 = 52";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Fraunces',serif;font-size:clamp(120px,22vw,260px);font-weight:900;color:rgba(59,130,246,.03);white-space:nowrap;pointer-events:none;letter-spacing:-.05em}
+    .hero{padding:100px 24px 80px;text-align:center;position:relative;overflow:hidden}
 
-    .hero-label{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#3B82F6;border:1px solid rgba(59,130,246,.2);border-radius:4px;padding:6px 16px;margin-bottom:36px;background:rgba(59,130,246,.05)}
-    .hero h1{font-family:'Fraunces',serif;font-size:clamp(32px,6vw,56px);font-weight:900;letter-spacing:-.03em;line-height:1.1;max-width:800px;margin:0 auto 28px;color:#f0f0f0}
-    .hero h1 span{color:#3B82F6}
-    .hero-sub{font-size:17px;color:#777;max-width:580px;margin:0 auto 44px;line-height:1.75}
+    .hero-geo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;opacity:.06;pointer-events:none}
+
+    .hero-label{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#c4626a;margin-bottom:32px}
+    .hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,7vw,64px);font-weight:400;font-style:italic;letter-spacing:-.01em;line-height:1.15;max-width:780px;margin:0 auto 28px;color:#1a1a1a}
+    .hero-sub{font-size:16px;color:#888;max-width:520px;margin:0 auto 44px;line-height:1.8}
     .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
-    .btn-primary{display:inline-block;padding:15px 32px;background:#3B82F6;color:#fff;border-radius:6px;font-weight:700;font-size:15px;border:none;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
-    .btn-primary:hover{background:#2563EB;color:#fff;transform:translateY(-1px)}
-    .btn-ghost{display:inline-block;padding:14px 30px;background:transparent;color:#666;border-radius:6px;font-weight:600;font-size:15px;border:1px solid #1e1e1e;cursor:pointer;transition:all .2s}
-    .btn-ghost:hover{border-color:#3B82F6;color:#3B82F6}
-    .hero-note{margin-top:20px;font-size:13px;color:#444;font-family:'JetBrains Mono',monospace}
+    .btn-primary{display:inline-block;padding:14px 32px;background:#1a1a1a;color:#f6f4f0;border-radius:2px;font-weight:600;font-size:14px;border:none;cursor:pointer;transition:all .25s;font-family:'Inter',sans-serif;letter-spacing:.03em}
+    .btn-primary:hover{background:#333;color:#f6f4f0;transform:translateY(-1px)}
+    .btn-outline{display:inline-block;padding:13px 30px;background:transparent;color:#888;border-radius:2px;font-weight:500;font-size:14px;border:1px solid #d5d0c8;cursor:pointer;transition:all .25s}
+    .btn-outline:hover{border-color:#c4626a;color:#c4626a}
+    .hero-note{margin-top:20px;font-size:12px;color:#bbb;font-family:'JetBrains Mono',monospace;letter-spacing:.04em}
 
     /* ── DIVIDER ── */
-    .divider{border:none;border-top:1px solid #141419;margin:0}
+    .divider{border:none;border-top:1px solid #e5e0d8;margin:0}
+    .divider-geo{text-align:center;padding:0;margin:0;position:relative}
+    .divider-geo::before{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:#e5e0d8}
+    .divider-geo svg{position:relative;z-index:1;background:#f6f4f0;padding:0 20px}
 
-    /* ── PROOF SECTION ── */
-    .proof{padding:100px 24px;max-width:900px;margin:0 auto}
-    .proof-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#3B82F6;margin-bottom:32px}
-    .proof h2{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-.02em;color:#e0e0e0;margin-bottom:20px;line-height:1.2}
-    .proof-text{color:#777;font-size:15px;line-height:1.85;max-width:640px;margin-bottom:48px}
-    .proof-text strong{color:#bbb;font-weight:600}
+    /* ── SECTION SHARED ── */
+    .section{padding:80px 24px;max-width:860px;margin:0 auto}
+    .section-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#c4626a;margin-bottom:28px}
+    .section h2{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4.5vw,40px);font-weight:400;font-style:italic;color:#1a1a1a;margin-bottom:16px;line-height:1.25}
+    .section-text{color:#777;font-size:15px;line-height:1.9;max-width:580px;margin-bottom:48px}
+    .section-text strong{color:#555;font-weight:600}
+
+    /* ── GEOMETRY SUITS ── */
+    .suits-row{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;margin:48px 0 24px}
+    .suit-fig{text-align:center}
+    .suit-fig svg{width:80px;height:80px}
+    .suit-label{font-family:'Cormorant Garamond',serif;font-size:14px;color:#999;margin-top:10px;font-style:italic}
 
     /* ── EQUATION GRID ── */
-    .eq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#141419;border:1px solid #141419;border-radius:12px;overflow:hidden;margin-bottom:48px}
-    @media(max-width:600px){.eq-grid{grid-template-columns:1fr}}
-    .eq-cell{background:#0c0d12;padding:36px 28px;position:relative}
-    .eq-cell:hover{background:#0e1017}
-    .eq-num{font-family:'Fraunces',serif;font-size:3rem;font-weight:900;color:#f0f0f0;letter-spacing:-.04em;margin-bottom:4px}
-    .eq-equals{font-family:'Fraunces',serif;font-size:3rem;font-weight:400;color:#3B82F6;margin-bottom:4px}
-    .eq-label{font-size:13px;color:#555;line-height:1.6}
-    .eq-label strong{color:#888;font-weight:600}
+    .eq-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#e5e0d8;border:1px solid #e5e0d8;border-radius:2px;overflow:hidden;margin-bottom:48px}
+    .eq-cell{background:#f6f4f0;padding:32px 20px;text-align:center}
+    .eq-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:400;color:#1a1a1a;margin-bottom:2px}
+    .eq-sym{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:#c4626a;margin-bottom:6px}
+    .eq-label{font-size:12px;color:#aaa;line-height:1.5}
 
-    /* ── THE EQUATION (big centered) ── */
-    .big-eq{padding:80px 24px;text-align:center;position:relative}
-    .big-eq-inner{max-width:800px;margin:0 auto;background:#0c0d12;border:1px solid #141419;border-radius:16px;padding:60px 40px;position:relative;overflow:hidden}
-    .big-eq-inner::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,.3),transparent)}
-    .equation{font-family:'Fraunces',serif;font-size:clamp(18px,3.5vw,28px);color:#e0e0e0;line-height:2.2;letter-spacing:.01em}
-    .equation .blue{color:#3B82F6}
-    .equation .dim{color:#555}
-    .eq-caption{font-size:13px;color:#444;margin-top:24px;font-family:'JetBrains Mono',monospace;line-height:1.7}
+    /* ── BIG EQUATION ── */
+    .big-eq{padding:60px 24px;text-align:center}
+    .big-eq-inner{max-width:680px;margin:0 auto;border-top:1px solid #e5e0d8;border-bottom:1px solid #e5e0d8;padding:48px 32px;position:relative}
+    .equation{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3.5vw,30px);color:#1a1a1a;line-height:2.2;font-style:italic}
+    .equation .rose{color:#c4626a}
+    .equation .dim{color:#ccc}
+    .eq-caption{font-size:12px;color:#aaa;margin-top:20px;font-family:'JetBrains Mono',monospace;line-height:1.7;letter-spacing:.02em}
 
-    /* ── BREAKDOWN ── */
-    .breakdown{padding:100px 24px;max-width:900px;margin:0 auto}
-    .breakdown h2{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-.02em;color:#e0e0e0;margin-bottom:20px;line-height:1.2}
-    .bd-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#3B82F6;margin-bottom:32px}
-    .bd-text{color:#777;font-size:15px;line-height:1.85;max-width:640px;margin-bottom:48px}
-    .bd-text strong{color:#bbb;font-weight:600}
+    /* ── STEPS ── */
+    .steps{display:grid;gap:0;margin-top:12px}
+    .step{padding:32px 0;border-bottom:1px solid #e5e0d8;display:grid;grid-template-columns:48px 1fr;gap:20px;align-items:start}
+    .step:last-child{border-bottom:none}
+    .step-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;color:#c4626a;line-height:1}
+    .step h3{font-size:15px;font-weight:600;color:#333;margin-bottom:6px}
+    .step p{font-size:14px;color:#999;line-height:1.8}
+    .step .formula{font-family:'JetBrains Mono',monospace;font-size:12px;color:#c4626a;background:#f0ece6;border:1px solid #e5e0d8;border-radius:2px;padding:6px 12px;margin-top:10px;display:inline-block}
 
-    .bd-steps{display:grid;gap:1px;background:#141419;border:1px solid #141419;border-radius:12px;overflow:hidden}
-    .bd-step{background:#0c0d12;padding:32px 28px;display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:start}
-    .bd-step:hover{background:#0e1017}
-    .bd-step-num{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:#3B82F6;line-height:1}
-    .bd-step h3{font-size:15px;font-weight:700;color:#ccc;margin-bottom:6px}
-    .bd-step p{font-size:14px;color:#555;line-height:1.7}
-    .bd-step .formula{font-family:'JetBrains Mono',monospace;font-size:13px;color:#3B82F6;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.12);border-radius:4px;padding:8px 12px;margin-top:10px;display:inline-block}
-
-    /* ── WHAT YOU GET ── */
-    .deliverable{padding:100px 24px;max-width:900px;margin:0 auto}
-    .del-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#3B82F6;margin-bottom:32px}
-    .deliverable h2{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-.02em;color:#e0e0e0;margin-bottom:20px;line-height:1.2}
-    .del-text{color:#777;font-size:15px;line-height:1.85;max-width:640px;margin-bottom:48px}
-    .del-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-    .del-card{background:#0c0d12;border:1px solid #141419;border-radius:10px;padding:28px;transition:border-color .3s}
-    .del-card:hover{border-color:#1e2a4a}
-    .del-card-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:#3B82F6;margin-bottom:12px}
-    .del-card h3{color:#ccc;font-size:15px;font-weight:700;margin-bottom:8px}
-    .del-card p{color:#555;font-size:14px;line-height:1.7}
+    /* ── OUTPUT CARDS ── */
+    .output-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+    .output-card{border:1px solid #e5e0d8;border-radius:2px;padding:28px;background:#faf8f5;transition:border-color .3s}
+    .output-card:hover{border-color:#c4626a}
+    .output-num{font-family:'Cormorant Garamond',serif;font-size:24px;color:#c4626a;margin-bottom:8px;font-style:italic}
+    .output-card h3{font-size:14px;font-weight:600;color:#333;margin-bottom:8px}
+    .output-card p{font-size:13px;color:#999;line-height:1.7}
 
     /* ── PLAN / CHECKOUT ── */
-    .plan-section{padding:100px 24px;background:#06070a;border-top:1px solid #141419;border-bottom:1px solid #141419}
-    .plan-inner{max-width:520px;margin:0 auto;text-align:center}
-    .plan-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#3B82F6;margin-bottom:32px;display:block}
-    .plan-heading{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-.02em;color:#e0e0e0;margin-bottom:8px}
-    .plan-subhead{font-size:15px;color:#555;margin-bottom:40px}
+    .plan-section{padding:80px 24px;background:#f0ece6;border-top:1px solid #e5e0d8;border-bottom:1px solid #e5e0d8}
+    .plan-inner{max-width:480px;margin:0 auto;text-align:center}
+    .plan-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#c4626a;margin-bottom:28px;display:block}
+    .plan-heading{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4.5vw,40px);font-weight:400;font-style:italic;color:#1a1a1a;margin-bottom:8px}
+    .plan-subhead{font-size:14px;color:#999;margin-bottom:36px}
 
-    .toggle-wrap{display:inline-flex;background:#0c0d12;border:1px solid #1a1a22;border-radius:6px;padding:3px;gap:0;margin-bottom:40px}
-    .toggle-btn{padding:10px 24px;border-radius:4px;border:none;background:transparent;color:#555;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
-    .toggle-btn.active{background:#3B82F6;color:#fff}
-    .toggle-save{display:inline-block;font-size:11px;background:rgba(74,222,128,.12);color:#4ade80;border-radius:3px;padding:2px 8px;margin-left:6px;font-weight:700}
+    .toggle-wrap{display:inline-flex;background:#f6f4f0;border:1px solid #e5e0d8;border-radius:2px;padding:3px;margin-bottom:36px}
+    .toggle-btn{padding:9px 22px;border-radius:1px;border:none;background:transparent;color:#999;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+    .toggle-btn.active{background:#1a1a1a;color:#f6f4f0}
+    .toggle-save{display:inline-block;font-size:10px;background:rgba(196,98,106,.1);color:#c4626a;border-radius:2px;padding:2px 7px;margin-left:5px;font-weight:700}
 
-    .plan-card{background:#0c0d12;border:1px solid #1a1a22;border-radius:12px;padding:40px;text-align:left}
+    .plan-card{background:#f6f4f0;border:1px solid #e5e0d8;border-radius:2px;padding:36px;text-align:left}
     .plan-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
-    .plan-price{font-family:'Fraunces',serif;font-size:3.2rem;font-weight:900;letter-spacing:-.04em;color:#f0f0f0}
-    .plan-period{font-size:15px;color:#555}
-    .plan-equiv{font-size:13px;color:#4ade80;margin-bottom:28px;min-height:20px;font-family:'JetBrains Mono',monospace}
-    .plan-features{list-style:none;margin-bottom:32px}
-    .plan-features li{font-size:14px;color:#999;padding:10px 0;border-bottom:1px solid #141419;display:flex;gap:12px;align-items:flex-start}
+    .plan-price{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:400;color:#1a1a1a}
+    .plan-period{font-size:14px;color:#999}
+    .plan-equiv{font-size:12px;color:#c4626a;margin-bottom:24px;min-height:18px;font-family:'JetBrains Mono',monospace}
+    .plan-features{list-style:none;margin-bottom:28px}
+    .plan-features li{font-size:13px;color:#777;padding:9px 0;border-bottom:1px solid #e5e0d8;display:flex;gap:12px;align-items:flex-start}
     .plan-features li:last-child{border-bottom:none}
-    .plan-features li::before{content:"+";color:#3B82F6;flex-shrink:0;font-weight:700;font-family:'JetBrains Mono',monospace}
+    .plan-features li::before{content:"\2022";color:#c4626a;flex-shrink:0;font-size:16px;line-height:1.3}
 
-    .plan-form input{width:100%;background:#08090c;border:1px solid #1a1a22;border-radius:6px;color:#e8e8e8;font-family:'Inter',sans-serif;font-size:15px;padding:13px 16px;outline:none;margin-bottom:10px;transition:border-color .2s}
-    .plan-form input:focus{border-color:#3B82F6}
-    .plan-form input::placeholder{color:#333}
-    .plan-btn{display:block;width:100%;padding:15px;background:#3B82F6;color:#fff;border:none;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
-    .plan-btn:hover{background:#2563EB;transform:translateY(-1px)}
+    .plan-form input{width:100%;background:#fff;border:1px solid #e5e0d8;border-radius:2px;color:#2a2a2a;font-family:'Inter',sans-serif;font-size:15px;padding:12px 14px;outline:none;margin-bottom:10px;transition:border-color .2s}
+    .plan-form input:focus{border-color:#c4626a}
+    .plan-form input::placeholder{color:#ccc}
+    .plan-btn{display:block;width:100%;padding:14px;background:#1a1a1a;color:#f6f4f0;border:none;border-radius:2px;font-size:14px;font-weight:600;cursor:pointer;transition:all .25s;font-family:'Inter',sans-serif;letter-spacing:.03em}
+    .plan-btn:hover{background:#333;transform:translateY(-1px)}
     .plan-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
     .plan-status{font-size:13px;margin-top:12px;min-height:18px;text-align:center}
-    .plan-status.ok{color:#4ade80}.plan-status.err{color:#f87171}
-    .plan-note{font-size:12px;color:#333;text-align:center;margin-top:12px;font-family:'JetBrains Mono',monospace}
+    .plan-status.ok{color:#5a9e6f}.plan-status.err{color:#c4626a}
+    .plan-note{font-size:11px;color:#bbb;text-align:center;margin-top:12px;font-family:'JetBrains Mono',monospace}
 
     /* ── FINAL CTA ── */
-    .final-cta{padding:100px 24px;text-align:center}
-    .final-cta h2{font-family:'Fraunces',serif;font-size:clamp(22px,3.5vw,32px);font-weight:900;letter-spacing:-.02em;margin-bottom:16px;color:#e0e0e0}
-    .final-cta p{color:#555;margin-bottom:32px;font-size:15px;line-height:1.7;max-width:480px;margin-left:auto;margin-right:auto}
+    .final-cta{padding:80px 24px;text-align:center}
+    .final-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4vw,36px);font-weight:400;font-style:italic;margin-bottom:16px;color:#1a1a1a}
+    .final-cta p{color:#999;margin-bottom:28px;font-size:15px;line-height:1.8;max-width:460px;margin-left:auto;margin-right:auto}
 
     /* ── FOOTER ── */
-    footer{text-align:center;padding:40px 20px;font-size:12px;color:#333;border-top:1px solid #141419}
-    footer a{color:#333;margin:0 10px;transition:color .2s}
-    footer a:hover{color:#3B82F6}
-    .footer-name{margin-bottom:8px;color:#222;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em}
-    .footer-disclaimer{margin-top:10px;color:#222}
+    footer{text-align:center;padding:40px 20px;font-size:12px;color:#ccc;border-top:1px solid #e5e0d8}
+    footer a{color:#bbb;margin:0 10px;transition:color .2s}
+    footer a:hover{color:#c4626a}
+    .footer-name{margin-bottom:8px;color:#aaa;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em}
+    .footer-disclaimer{margin-top:10px;color:#ccc}
 
     /* ── MOBILE ── */
     @media(max-width:600px){
-      /* Larger tap targets, thumb-friendly spacing */
-      body{font-size:16px;-webkit-text-size-adjust:100%}
-
+      body{font-size:16px}
       .hero{padding:72px 20px 56px}
-      .hero h1{font-size:28px;letter-spacing:-.02em;margin-bottom:20px}
-      .hero-sub{font-size:15px;line-height:1.7;margin-bottom:32px}
-      .hero-label{font-size:11px;padding:5px 14px;margin-bottom:28px}
-      .hero::before{font-size:80px}
-      .hero-actions{flex-direction:column;gap:10px;align-items:stretch;padding:0 8px}
-      .btn-primary,.btn-ghost{width:100%;text-align:center;padding:16px 20px;font-size:16px;min-height:50px;display:flex;align-items:center;justify-content:center}
+      .hero h1{font-size:32px;margin-bottom:20px}
+      .hero-sub{font-size:15px;margin-bottom:32px}
+      .hero-actions{flex-direction:column;align-items:stretch;padding:0 12px}
+      .btn-primary,.btn-outline{width:100%;text-align:center;padding:16px 20px;font-size:15px;min-height:50px;display:flex;align-items:center;justify-content:center}
       .hero-note{font-size:11px;margin-top:16px}
+      .hero-geo{width:300px;height:300px;opacity:.04}
 
-      /* Proof section */
-      .proof{padding:60px 20px}
-      .proof h2{font-size:24px}
-      .proof-text{font-size:14px;margin-bottom:32px}
-      .eq-grid{grid-template-columns:1fr 1fr}
-      .eq-cell{padding:24px 16px}
+      .suits-row{gap:24px}
+      .suit-fig svg{width:56px;height:56px}
+
+      .section{padding:56px 20px}
+      .section h2{font-size:28px}
+      .section-text{font-size:14px;margin-bottom:32px}
+
+      .eq-grid{grid-template-columns:repeat(2,1fr)}
       .eq-num{font-size:2.2rem}
-      .eq-equals{font-size:2.2rem}
-      .eq-label{font-size:12px}
+      .eq-cell{padding:24px 14px}
 
-      /* Big equation */
-      .big-eq{padding:48px 16px}
-      .big-eq-inner{padding:32px 16px;border-radius:12px}
-      .equation{font-size:16px;line-height:2.4}
-      .eq-caption{font-size:11px;line-height:1.6}
+      .big-eq{padding:40px 16px}
+      .big-eq-inner{padding:36px 16px}
+      .equation{font-size:18px}
+      .eq-caption{font-size:11px}
 
-      /* Breakdown / system */
-      .breakdown{padding:60px 20px}
-      .breakdown h2{font-size:24px}
-      .bd-text{font-size:14px;margin-bottom:32px}
-      .bd-step{grid-template-columns:36px 1fr;gap:12px;padding:24px 18px}
-      .bd-step-num{font-size:1.5rem}
-      .bd-step h3{font-size:14px}
-      .bd-step p{font-size:13px}
-      .bd-step .formula{font-size:11px;padding:6px 10px;margin-top:8px;word-break:break-all;max-width:100%;overflow-x:auto}
+      .step{grid-template-columns:36px 1fr;gap:14px;padding:24px 0}
+      .step-num{font-size:1.6rem}
+      .step h3{font-size:14px}
+      .step p{font-size:13px}
+      .step .formula{font-size:11px;word-break:break-all}
 
-      /* Deliverables */
-      .deliverable{padding:60px 20px}
-      .deliverable h2{font-size:24px}
-      .del-text{font-size:14px;margin-bottom:32px}
-      .del-grid{grid-template-columns:1fr;gap:12px}
-      .del-card{padding:22px 18px}
-      .del-card h3{font-size:14px}
-      .del-card p{font-size:13px}
+      .output-grid{grid-template-columns:1fr}
+      .output-card{padding:22px 18px}
 
-      /* Plan / checkout */
-      .plan-section{padding:60px 16px}
-      .plan-heading{font-size:24px}
-      .plan-subhead{font-size:14px;margin-bottom:28px}
-      .toggle-wrap{margin-bottom:28px}
-      .toggle-btn{padding:10px 20px;font-size:13px}
-      .plan-card{padding:24px 18px;border-radius:10px}
+      .plan-section{padding:56px 16px}
+      .plan-heading{font-size:28px}
+      .plan-card{padding:24px 18px}
       .plan-price{font-size:2.6rem}
-      .plan-period{font-size:14px}
-      .plan-features li{font-size:13px;padding:9px 0}
-      .plan-form input{font-size:16px;padding:14px 16px;border-radius:8px;-webkit-appearance:none}
-      .plan-btn{font-size:16px;padding:16px;min-height:52px;border-radius:8px;-webkit-appearance:none}
-      .plan-note{font-size:11px}
+      .plan-form input{font-size:16px;padding:14px;-webkit-appearance:none}
+      .plan-btn{font-size:16px;padding:16px;min-height:52px;-webkit-appearance:none}
 
-      /* Final CTA */
-      .final-cta{padding:60px 20px}
-      .final-cta h2{font-size:22px}
-      .final-cta p{font-size:14px}
-      .final-cta .btn-primary{width:100%;text-align:center;padding:16px 20px;font-size:16px;min-height:50px;display:flex;align-items:center;justify-content:center}
+      .final-cta{padding:56px 20px}
+      .final-cta h2{font-size:26px}
+      .final-cta .btn-primary{width:100%;text-align:center;padding:16px;font-size:15px;min-height:50px;display:flex;align-items:center;justify-content:center}
 
-      /* Footer */
       footer{padding:32px 20px}
-      footer a{margin:0 8px;font-size:12px}
     }
-
-    /* ── SMALL PHONES ── */
     @media(max-width:380px){
-      .hero h1{font-size:24px}
-      .eq-grid{grid-template-columns:1fr}
-      .equation{font-size:14px}
-      .plan-price{font-size:2.2rem}
-      .bd-step .formula{font-size:10px}
+      .hero h1{font-size:28px}
+      .eq-grid{grid-template-columns:1fr 1fr}
+      .equation{font-size:16px}
+      .suits-row{gap:16px}
+      .suit-fig svg{width:48px;height:48px}
     }
-
-    /* ── TOUCH DEVICE OPTIMIZATIONS ── */
     @media(hover:none){
-      .eq-cell:hover,.bd-step:hover,.del-card:hover{background:inherit;border-color:inherit;transform:none}
+      .output-card:hover{border-color:#e5e0d8}
       .btn-primary:hover{transform:none}
       .btn-primary:active{opacity:.85}
-      .btn-ghost:active{border-color:#3B82F6;color:#3B82F6}
     }
   </style>
 </head>
@@ -230,48 +195,119 @@
 
 <!-- ─── HERO ─── -->
 <section class="hero" id="top">
+  <!-- Background geometric pattern -->
+  <svg class="hero-geo" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="100" stroke="#1a1a1a" stroke-width=".5"/>
+    <circle cx="200" cy="100" r="100" stroke="#1a1a1a" stroke-width=".5"/>
+    <circle cx="200" cy="300" r="100" stroke="#1a1a1a" stroke-width=".5"/>
+    <circle cx="100" cy="200" r="100" stroke="#1a1a1a" stroke-width=".5"/>
+    <circle cx="300" cy="200" r="100" stroke="#1a1a1a" stroke-width=".5"/>
+    <circle cx="150" cy="113" r="100" stroke="#1a1a1a" stroke-width=".3"/>
+    <circle cx="250" cy="113" r="100" stroke="#1a1a1a" stroke-width=".3"/>
+    <circle cx="150" cy="287" r="100" stroke="#1a1a1a" stroke-width=".3"/>
+    <circle cx="250" cy="287" r="100" stroke="#1a1a1a" stroke-width=".3"/>
+    <circle cx="200" cy="200" r="173" stroke="#c4626a" stroke-width=".3" opacity=".4"/>
+    <line x1="200" y1="27" x2="200" y2="373" stroke="#1a1a1a" stroke-width=".2"/>
+    <line x1="27" y1="200" x2="373" y2="200" stroke="#1a1a1a" stroke-width=".2"/>
+  </svg>
+
   <div class="hero-label">Card Blueprints</div>
-  <h1>A deck of cards is a <span>mathematical model</span> of the year.</h1>
-  <p class="hero-sub">52 cards. 52 weeks. The pip values sum to 365. Your birth date assigns you a position in this structure. Each month, we calculate what's active and mail you the breakdown.</p>
+  <h1>The geometry hidden inside a deck of cards.</h1>
+  <p class="hero-sub">52 cards map to 52 weeks. The pip values sum to 365 days. Your birth date places you inside this structure. Every month, we calculate your position and mail you the blueprint.</p>
   <div class="hero-actions">
     <a href="#plan" class="btn-primary">Get your blueprint — $25/mo</a>
-    <a href="#proof" class="btn-ghost">See the math</a>
+    <a href="#proof" class="btn-outline">See the math</a>
   </div>
-  <div class="hero-note">$25/month &middot; cancel anytime &middot; no contracts</div>
+  <div class="hero-note">$25/month &middot; cancel anytime</div>
+</section>
+
+<hr class="divider"/>
+
+<!-- ─── GEOMETRIC SUITS ─── -->
+<section class="section" style="text-align:center">
+  <div class="section-label">Four suits. Four seasons. One structure.</div>
+  <div class="suits-row">
+    <!-- Spade from geometry -->
+    <div class="suit-fig">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="30" r="18" stroke="#1a1a1a" stroke-width=".8"/>
+        <circle cx="28" cy="44" r="16" stroke="#1a1a1a" stroke-width=".8"/>
+        <circle cx="52" cy="44" r="16" stroke="#1a1a1a" stroke-width=".8"/>
+        <path d="M40 12 L24 48 Q28 56 40 50 Q52 56 56 48 Z" stroke="#1a1a1a" stroke-width=".6" fill="none"/>
+        <line x1="40" y1="50" x2="40" y2="72" stroke="#1a1a1a" stroke-width=".6"/>
+        <circle cx="40" cy="40" r="36" stroke="#c4626a" stroke-width=".3" opacity=".4"/>
+      </svg>
+      <div class="suit-label">Spades</div>
+    </div>
+    <!-- Heart from geometry -->
+    <div class="suit-fig">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="28" cy="32" r="16" stroke="#c4626a" stroke-width=".8"/>
+        <circle cx="52" cy="32" r="16" stroke="#c4626a" stroke-width=".8"/>
+        <path d="M12 34 Q12 56 40 70 Q68 56 68 34" stroke="#c4626a" stroke-width=".6" fill="none"/>
+        <circle cx="40" cy="40" r="36" stroke="#1a1a1a" stroke-width=".3" opacity=".3"/>
+        <line x1="40" y1="16" x2="40" y2="70" stroke="#1a1a1a" stroke-width=".2" stroke-dasharray="2 3"/>
+      </svg>
+      <div class="suit-label">Hearts</div>
+    </div>
+    <!-- Diamond from geometry -->
+    <div class="suit-fig">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="16" y="16" width="48" height="48" transform="rotate(45 40 40)" stroke="#c4626a" stroke-width=".8" fill="none"/>
+        <circle cx="40" cy="40" r="24" stroke="#1a1a1a" stroke-width=".5"/>
+        <circle cx="40" cy="40" r="34" stroke="#1a1a1a" stroke-width=".3" opacity=".3"/>
+        <line x1="40" y1="6" x2="40" y2="74" stroke="#1a1a1a" stroke-width=".2"/>
+        <line x1="6" y1="40" x2="74" y2="40" stroke="#1a1a1a" stroke-width=".2"/>
+      </svg>
+      <div class="suit-label">Diamonds</div>
+    </div>
+    <!-- Club from geometry -->
+    <div class="suit-fig">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="24" r="14" stroke="#1a1a1a" stroke-width=".8"/>
+        <circle cx="26" cy="44" r="14" stroke="#1a1a1a" stroke-width=".8"/>
+        <circle cx="54" cy="44" r="14" stroke="#1a1a1a" stroke-width=".8"/>
+        <line x1="40" y1="50" x2="40" y2="72" stroke="#1a1a1a" stroke-width=".6"/>
+        <circle cx="40" cy="38" r="10" stroke="#c4626a" stroke-width=".3" opacity=".5"/>
+        <circle cx="40" cy="38" r="32" stroke="#1a1a1a" stroke-width=".3" opacity=".3"/>
+      </svg>
+      <div class="suit-label">Clubs</div>
+    </div>
+  </div>
 </section>
 
 <hr class="divider"/>
 
 <!-- ─── THE PROOF ─── -->
-<section class="proof" id="proof">
-  <div class="proof-label">The proof</div>
-  <h2>These are not approximations.</h2>
-  <p class="proof-text">The correspondence between a standard deck of playing cards and the calendar year is <strong>exact</strong>. Not metaphorical. Not rounded. The numbers lock in perfectly.</p>
+<section class="section" id="proof">
+  <div class="section-label">The proof</div>
+  <h2>These numbers are not approximations.</h2>
+  <p class="section-text">The correspondence between a standard 52-card deck and the calendar year is <strong>mathematically exact</strong>. Not metaphorical, not rounded. The structure is precise.</p>
 
   <div class="eq-grid">
     <div class="eq-cell">
       <div class="eq-num">52</div>
-      <div class="eq-equals">=</div>
-      <div class="eq-label"><strong>Cards in a deck</strong><br/>Weeks in a year</div>
+      <div class="eq-sym">=</div>
+      <div class="eq-label">Cards in a deck<br/>Weeks in a year</div>
     </div>
     <div class="eq-cell">
       <div class="eq-num">4</div>
-      <div class="eq-equals">=</div>
-      <div class="eq-label"><strong>Suits</strong><br/>Seasons</div>
+      <div class="eq-sym">=</div>
+      <div class="eq-label">Suits<br/>Seasons</div>
     </div>
     <div class="eq-cell">
       <div class="eq-num">13</div>
-      <div class="eq-equals">=</div>
-      <div class="eq-label"><strong>Cards per suit</strong><br/>Weeks per season</div>
+      <div class="eq-sym">=</div>
+      <div class="eq-label">Cards per suit<br/>Weeks per season</div>
     </div>
     <div class="eq-cell">
       <div class="eq-num">365</div>
-      <div class="eq-equals">=</div>
-      <div class="eq-label"><strong>Sum of all pip values</strong><br/>Days in a year</div>
+      <div class="eq-sym">=</div>
+      <div class="eq-label">Sum of all pips<br/>Days in a year</div>
     </div>
   </div>
 
-  <p class="proof-text">Add every pip value in the deck: Aces through 10s at face value, Jacks = 11, Queens = 12, Kings = 13. Four suits of 91 each. <strong>4 &times; 91 = 364</strong>. Add the Joker. <strong>365</strong>.</p>
+  <p class="section-text">Add every pip value: Aces through 10s at face value, Jacks = 11, Queens = 12, Kings = 13. Four suits of 91 each. <strong>4 &times; 91 = 364</strong>. Add the Joker. <strong>365</strong>.</p>
 </section>
 
 <hr class="divider"/>
@@ -280,52 +316,52 @@
 <section class="big-eq">
   <div class="big-eq-inner">
     <div class="equation">
-      <span class="dim">(</span> 1 + 2 + 3 + ... + 13 <span class="dim">)</span> <span class="blue">&times;</span> 4 <span class="blue">+</span> 1<br/>
-      <span class="blue">=</span> <span class="dim">(</span> 91 <span class="dim">)</span> <span class="blue">&times;</span> 4 <span class="blue">+</span> 1<br/>
-      <span class="blue">= 365</span>
+      <span class="dim">(</span> 1 + 2 + 3 + &hellip; + 13 <span class="dim">)</span> <span class="rose">&times;</span> 4 <span class="rose">+</span> 1<br/>
+      <span class="rose">=</span> <span class="dim">(</span> 91 <span class="dim">)</span> <span class="rose">&times;</span> 4 <span class="rose">+</span> 1<br/>
+      <span class="rose">= 365</span>
     </div>
-    <div class="eq-caption">Sum of one suit (1+2+...+13 = 91) &times; four suits + one Joker = days in a year</div>
+    <div class="eq-caption">Sum of one suit &times; four suits + one Joker = days in a year</div>
   </div>
 </section>
 
 <hr class="divider"/>
 
-<!-- ─── HOW THE SYSTEM WORKS ─── -->
-<section class="breakdown" id="how-it-works">
-  <div class="bd-label">The system</div>
+<!-- ─── THE SYSTEM ─── -->
+<section class="section" id="how-it-works">
+  <div class="section-label">The system</div>
   <h2>How a birth date becomes a monthly blueprint.</h2>
-  <p class="bd-text">The card-calendar system maps every day of the year to a specific card. From that assignment, a set of mathematical operations produces your full layout.</p>
+  <p class="section-text">Every day of the year maps to a card. From that single assignment, a sequence of mathematical operations produces your complete layout.</p>
 
-  <div class="bd-steps">
-    <div class="bd-step">
-      <div class="bd-step-num">1</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
       <div>
         <h3>Birth card assignment</h3>
-        <p>Each of the 365 days maps to one of the 52 cards. Your birthday determines your birth card — your fixed position in the deck. This never changes.</p>
+        <p>Each of the 365 days maps to one of the 52 cards. Your birthday determines your birth card — a fixed position in the structure that never changes.</p>
         <div class="formula">date(MM/DD) &rarr; card[n] where n &isin; {1..52}</div>
       </div>
     </div>
-    <div class="bd-step">
-      <div class="bd-step-num">2</div>
+    <div class="step">
+      <div class="step-num">2</div>
       <div>
-        <h3>Yearly card rotation</h3>
-        <p>Each year of your life, a new card takes the primary position in your layout. This follows a fixed sequence — determined entirely by your birth card and your current age.</p>
+        <h3>Yearly rotation</h3>
+        <p>Each year of your life, a new card takes the primary position in your layout. The sequence is determined by your birth card and current age.</p>
         <div class="formula">card[n] + age &rarr; yearly_position</div>
       </div>
     </div>
-    <div class="bd-step">
-      <div class="bd-step-num">3</div>
+    <div class="step">
+      <div class="step-num">3</div>
       <div>
         <h3>The 52-day cycle</h3>
-        <p>Within each year, your active cards shift every 52 days. Seven periods per year, each governed by a different card in your sequence. This is where the month-to-month changes come from.</p>
+        <p>Within each year, your active cards shift every 52 days. Seven periods per year, each governed by a different card. This is where month-to-month changes come from.</p>
         <div class="formula">year_day &divide; 52 &rarr; period[0..6] &rarr; active_cards[]</div>
       </div>
     </div>
-    <div class="bd-step">
-      <div class="bd-step-num">4</div>
+    <div class="step">
+      <div class="step-num">4</div>
       <div>
         <h3>The full layout</h3>
-        <p>Your birth card, yearly position cards, and current period cards combine into a complete layout. Each card occupies a named position — long range, result, environment, displacement — describing a different dimension of the current period.</p>
+        <p>Birth card, yearly cards, and current period cards combine into a complete layout. Each position — long range, result, environment, displacement — describes a different dimension of the current period.</p>
         <div class="formula">layout = { birth, yearly[7], period[active] }</div>
       </div>
     </div>
@@ -335,30 +371,30 @@
 <hr class="divider"/>
 
 <!-- ─── WHAT YOU GET ─── -->
-<section class="deliverable">
-  <div class="del-label">The output</div>
+<section class="section">
+  <div class="section-label">The output</div>
   <h2>What arrives each month.</h2>
-  <p class="del-text">We run the calculations for your current period and translate the layout into a letter. No jargon. No vague language. Specific positions, specific patterns.</p>
+  <p class="section-text">We run the calculations for your current period and translate the layout into a letter. Specific positions, specific patterns, plain language.</p>
 
-  <div class="del-grid">
-    <div class="del-card">
-      <div class="del-card-num">01</div>
+  <div class="output-grid">
+    <div class="output-card">
+      <div class="output-num">i.</div>
       <h3>Your card positions</h3>
-      <p>Birth card, yearly cards, and current active cards — all calculated for the exact period your letter covers.</p>
+      <p>Birth card, yearly cards, and current active cards — calculated for the exact period your letter covers.</p>
     </div>
-    <div class="del-card">
-      <div class="del-card-num">02</div>
+    <div class="output-card">
+      <div class="output-num">ii.</div>
       <h3>Pattern analysis</h3>
-      <p>What each position means in plain language. Where friction shows up, where leverage is, what the structural pattern tends to produce.</p>
+      <p>What each position means. Where friction shows up, where leverage is, what the structural pattern tends to produce.</p>
     </div>
-    <div class="del-card">
-      <div class="del-card-num">03</div>
+    <div class="output-card">
+      <div class="output-num">iii.</div>
       <h3>A personal letter</h3>
-      <p>400-600 words written directly to you. The math translated into practical observations about the month ahead.</p>
+      <p>400–600 words written to you. The math translated into practical observations about the month ahead.</p>
     </div>
-    <div class="del-card">
-      <div class="del-card-num">04</div>
-      <h3>Printed and mailed</h3>
+    <div class="output-card">
+      <div class="output-num">iv.</div>
+      <h3>Printed &amp; mailed</h3>
       <p>Quality paper, sealed envelope, delivered to your door in the first week of each month.</p>
     </div>
   </div>
@@ -387,8 +423,8 @@
 
       <ul class="plan-features">
         <li>Full card layout calculated for your birth date and current cycle</li>
-        <li>Personal letter — 400-600 words, plain language, no jargon</li>
-        <li>Printed on quality stock and mailed in a sealed envelope</li>
+        <li>Personal letter — 400–600 words, plain language</li>
+        <li>Printed on quality stock, mailed in a sealed envelope</li>
         <li>Arrives first week of each month</li>
         <li>Cancel anytime</li>
       </ul>
@@ -410,8 +446,8 @@
 
 <!-- ─── FINAL CTA ─── -->
 <div class="final-cta">
-  <h2>The math is already running.</h2>
-  <p>Your birth date assigned you a card. That card sits in a specific position this month. Your blueprint shows you which one and what it means.</p>
+  <h2>The structure is already there.</h2>
+  <p>Your birth date placed you inside it. Your blueprint shows you where you are right now.</p>
   <a href="#plan" class="btn-primary">Start for $25/mo</a>
 </div>
 
@@ -427,7 +463,6 @@
 
 <script>
 let currentBilling = 'monthly';
-
 const prices = {
   monthly: { display: '$25', period: '/ month', equiv: '\u00A0', btnLabel: 'Get my blueprint \u2014 $25/mo' },
   yearly:  { display: '$250', period: '/ year', equiv: '$20.83/month \u2014 save $50', btnLabel: 'Get my blueprint \u2014 $250/yr' }

@@ -11,11 +11,11 @@ if (!verify_signature($payload, $sigHeader, $config['stripe_webhook_secret'])) {
 $event = json_decode($payload, true);
 if (($event['type'] ?? '') === 'checkout.session.completed') {
     $session = $event['data']['object'] ?? [];
-    $type    = $session['metadata']['type'] ?? 'pack';
-    if ($type === 'reading') {
-        handle_reading_completed($session);
-    } else {
-        handle_checkout_completed($config, $session);
+    $meta    = $session['metadata'] ?? [];
+    $type    = $meta['type'] ?? 'unknown';
+
+    if ($type === 'letter') {
+        handle_letter_subscription($config, $session, $meta);
     }
 }
 http_response_code(200);
@@ -33,67 +33,87 @@ function verify_signature(string $payload, string $header, string $secret): bool
     return hash_equals($expected, $parts['v1']);
 }
 
-function handle_checkout_completed(array $config, array $session): void {
-    $tokens = load_tokens($config);
-    $token  = generate_token();
-    $pack   = latest_pack($config);
-    $email  = $session['customer_details']['email'] ?? 'unknown';
-    $name   = $session['customer_details']['name']  ?? '';
-    $tokens[$token] = ['email' => $email, 'created' => time(), 'pack' => $pack, 'status' => 'active'];
-    save_tokens($config, $tokens);
-    notify_supabase('funnel', 'Send purchase follow-up to buyer', [
-        'email' => $email, 'name' => $name, 'token' => $token, 'product' => 'Card Blueprints Pack'
-    ]);
+function handle_letter_subscription(array $config, array $session, array $meta): void {
+    $email    = $session['customer_details']['email'] ?? ($meta['email'] ?? '');
+    $name     = $meta['name']     ?? '';
+    $birthday = $meta['birthday'] ?? '';
+    $address  = $meta['address']  ?? '';
+    $plan     = $meta['plan']     ?? 'monthly';
+    $date     = date('Y-m-d H:i:s');
+
+    // 1. Append to CSV
+    $csv_dir = __DIR__ . '/../storage';
+    if (!is_dir($csv_dir)) mkdir($csv_dir, 0700, true);
+    $csv_path = $csv_dir . '/subscribers.csv';
+    $is_new   = !file_exists($csv_path);
+    $fp = fopen($csv_path, 'a');
+    if ($fp) {
+        if ($is_new) fputcsv($fp, ['date', 'name', 'email', 'birthday', 'address', 'plan']);
+        fputcsv($fp, [$date, $name, $email, $birthday, $address, $plan]);
+        fclose($fp);
+    }
+
+    // 2. Email notification via SMTP
+    $subject = "New subscriber: $name ($plan)";
+    $body = "New Card Blueprints subscriber!\n\n"
+          . "Name:     $name\n"
+          . "Email:    $email\n"
+          . "Birthday: $birthday\n"
+          . "Address:  $address\n"
+          . "Plan:     $plan\n"
+          . "Date:     $date\n";
+
+    send_smtp(
+        $config['smtp_host'] ?? 'mail.cardblueprints.com',
+        $config['smtp_port'] ?? 465,
+        $config['smtp_user'] ?? 'contact@cardblueprints.com',
+        $config['smtp_pass'] ?? '',
+        'contact@cardblueprints.com',
+        'cassricemail@gmail.com',
+        $subject,
+        $body
+    );
 }
 
-function handle_reading_completed(array $session): void {
-    $meta  = $session['metadata'] ?? [];
-    $email = $session['customer_details']['email'] ?? ($meta['email'] ?? 'unknown');
-    $name  = $meta['name']      ?? '';
-    $bday  = $meta['birthday']  ?? '';
-    $rdate = $meta['read_date'] ?? '';
-    $q     = $meta['question']  ?? '';
+function send_smtp(string $host, int $port, string $user, string $pass, string $from, string $to, string $subject, string $body): bool {
+    $ctx = stream_context_create(['ssl' => ['verify_peer' => false, 'verify_peer_name' => false]]);
+    $sock = stream_socket_client("ssl://$host:$port", $errno, $errstr, 10, STREAM_CLIENT_CONNECT, $ctx);
+    if (!$sock) return false;
 
-    // Save to readings table
-    $sb_url = 'https://djopinoumymftemtifrn.supabase.co/rest/v1';
-    $sb_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRqb3Bpbm91bXltZnRlbXRpZnJuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MzgyNjMxMiwiZXhwIjoyMDg5NDAyMzEyfQ.z_SxCQUdWSwKOkNH4Kht-oYmhqqB9fm5SGdDbvpoPJE';
-    $hdrs   = "apikey: $sb_key\r\nAuthorization: Bearer $sb_key\r\nContent-Type: application/json\r\nPrefer: return=minimal\r\n";
+    // Read full multi-line SMTP response, return last line
+    $read = function() use ($sock) {
+        $last = '';
+        do {
+            $line = fgets($sock, 512);
+            if ($line === false) break;
+            $last = $line;
+        } while (isset($line[3]) && $line[3] === '-');
+        return $last;
+    };
+    $write = function(string $cmd) use ($sock) { fwrite($sock, "$cmd\r\n"); };
 
-    $reading_body = json_encode([
-        'email'    => $email,
-        'name'     => $name,
-        'question' => $q,
-        'spread'   => $rdate,
-        'status'   => 'pending',
-        'result'   => json_encode(['birthday' => $bday, 'read_date' => $rdate]),
-    ]);
-    $ctx = stream_context_create(['http' => [
-        'method' => 'POST', 'header' => $hdrs, 'content' => $reading_body, 'ignore_errors' => true
-    ]]);
-    @file_get_contents("$sb_url/readings", false, $ctx);
+    $read();                                    // 220 greeting
+    $write("EHLO cardblueprints.com"); $read(); // 250 capabilities
 
-    // Notify coordinator
-    notify_supabase('coordinator', 'New video reading order — needs to be recorded', [
-        'email' => $email, 'name' => $name, 'birthday' => $bday,
-        'read_date' => $rdate, 'question' => $q
-    ]);
+    $write("AUTH LOGIN");         $read();      // 334
+    $write(base64_encode($user)); $read();      // 334
+    $write(base64_encode($pass)); $resp = $read(); // 235 or 535
+    if (!str_starts_with(trim($resp), '235')) { fclose($sock); return false; }
 
-    // Confirmation email via funnel agent
-    notify_supabase('funnel', 'Send reading confirmation email to buyer', [
-        'email' => $email, 'name' => $name, 'product' => 'Personal Video Reading',
-        'details' => "Date: $rdate | Question: $q"
-    ]);
-}
+    $write("MAIL FROM:<$from>");  $read();      // 250
+    $write("RCPT TO:<$to>");      $read();      // 250
+    $write("DATA");               $read();      // 354
 
-function notify_supabase(string $agent, string $task, array $payload): void {
-    $sb_url = 'https://djopinoumymftemtifrn.supabase.co/rest/v1/tasks';
-    $sb_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRqb3Bpbm91bXltZnRlbXRpZnJuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MzgyNjMxMiwiZXhwIjoyMDg5NDAyMzEyfQ.z_SxCQUdWSwKOkNH4Kht-oYmhqqB9fm5SGdDbvpoPJE';
-    $body   = json_encode(['assigned_to' => $agent, 'task' => $task, 'payload' => $payload]);
-    $ctx    = stream_context_create(['http' => [
-        'method'        => 'POST',
-        'header'        => "Content-Type: application/json\r\napikey: $sb_key\r\nAuthorization: Bearer $sb_key\r\nPrefer: return=minimal\r\n",
-        'content'       => $body,
-        'ignore_errors' => true,
-    ]]);
-    @file_get_contents($sb_url, false, $ctx);
+    $msg = "From: Card Blueprints <$from>\r\n"
+         . "To: $to\r\n"
+         . "Subject: $subject\r\n"
+         . "Content-Type: text/plain; charset=UTF-8\r\n"
+         . "\r\n"
+         . $body;
+    $write($msg);
+    $write(".");                  $resp = $read(); // 250
+    $write("QUIT");
+
+    fclose($sock);
+    return str_starts_with(trim($resp), '250');
 }
